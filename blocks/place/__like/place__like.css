@@ -1,0 +1,10 @@
+.place__like {
+	background-image: url(../../../image/like.png);
+	width: 21px;
+	height: 19px;
+	background-color: white;
+	background-repeat: no-repeat;
+	background-position: center;
+	border: none;
+	margin: auto 0;
+}

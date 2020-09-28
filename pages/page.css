@@ -1,0 +1,10 @@
+@import "../blocks/root/root.css";
+@import "../fonts/fonts.css";
+@import "../blocks/header/header.css";
+@import "../blocks/profile/profile.css";
+@import "../blocks/place/place.css";
+@import "../blocks/footer/footer.css";
+@import "../blocks/places/places.css";
+@import "../blocks/place/place.css";
+@import "../blocks/popup/popup.css";
+@import "../blocks/popup/_is-opened/popup_is-opened.css";

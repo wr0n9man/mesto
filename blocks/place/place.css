@@ -1,0 +1,8 @@
+@import "__card/place__card.css";
+@import "__image/place__image.css";
+@import "__like/place__like.css";
+@import "__main/place__main.css";
+@import "__name/place__name.css";
+
+.place {
+}

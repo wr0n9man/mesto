@@ -1,0 +1,20 @@
+@import "__avatar/profile__avatar.css";
+@import "__about/profile__about.css";
+@import "__Add-button/profile__Add-button.css";
+@import "__Edit-button/profile__Edit-button.css";
+@import "__info/profile__info.css";
+@import "__name/profile__name.css";
+@import "__redact/profile__redact.css";
+
+.profile {
+	display: flex;
+	color: white;
+	justify-content: space-between;
+}
+
+@media screen and (max-width: 767px) {
+	.profile {
+		align-items: center;
+		flex-direction: column;
+	}
+}

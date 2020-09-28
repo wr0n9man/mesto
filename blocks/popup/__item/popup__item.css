@@ -1,0 +1,26 @@
+@import "_job/popup__irem_job.css";
+@import "_name/popup__item_name.css";
+
+.popup__item {
+	border: 0;
+	width: 88%;
+	height: 36px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #bcbcc4;
+	background-color: transparent;
+	margin-bottom: 30px;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+.popup__item:last-of-type {
+	margin-bottom: 48px;
+}
+
+@media screen and (max-width: 767px) {
+	.popup__item:last-of-type {
+		margin-bottom: 45px;
+	}
+}
