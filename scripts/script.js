@@ -3,9 +3,9 @@
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__container');
 let profile = document.querySelector('.profile__redact');
-let buttonoOpenPopup = document.querySelector('.profile__Edit-button')
+let buttonoOpenPopup = document.querySelector('.profile__edit-button')
 let buttonoClosePopup = document.querySelector('.popup__close-image')
-let buttonoSavePopup = document.querySelector('.popup__Save-button')
+let buttonoSavePopup = document.querySelector('.popup__save-button')
 let popup = document.querySelector('.popup');
 let nameInput = formElement.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
