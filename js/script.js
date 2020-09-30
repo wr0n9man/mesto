@@ -31,7 +31,7 @@ function formSubmitHandler(evt) {
 	// Получите значение полей из свойства value
 
 	// Выберите элементы, куда должны быть вставлены значения полей
-	let profile__heading = profile.querySelector('h2');
+	let profile__heading = profile.querySelector('h1');
 	let profile__job = profile.querySelector('p');
 	// Вставьте новые значения с помощью textContent
 	profile__heading.textContent = `${nameInput.value}`;

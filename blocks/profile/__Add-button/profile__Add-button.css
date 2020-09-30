@@ -5,8 +5,9 @@
 	background-color: black;
 	background-repeat: no-repeat;
 	background-position: center;
-	border: 1px solid #ffffff;
+	border: 2px solid #ffffff;
 	box-sizing: border-box;
+	border-radius: 2px;
 	margin: 0;
 	margin-top: 35px;
 }

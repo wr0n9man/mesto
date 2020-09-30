@@ -4,14 +4,14 @@
 	flex-wrap: wrap;
 	flex-direction: column;
 	height: 120px;
-	width: calc(100% - 150px);
+	max-width: calc(100% - 150px);
 }
 
 @media screen and (max-width: 767px) {
 	.profile__redact {
 		flex-direction: row;
 		height: auto;
-		width: 88vw;
+		min-width: 88vw;
 		align-items: center;
 		margin-top: 14px;
 		margin-bottom: 36px;
