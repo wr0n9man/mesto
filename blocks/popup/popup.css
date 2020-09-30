@@ -3,7 +3,7 @@
 @import "__content/popup__content.css";
 @import "__item/popup__item.css";
 @import "__head/popup__head.css";
-@import "__Save-button/popup__Save-button.css";
+@import "__save-button/popup__save-button.css";
 
 .popup {
 	z-index: 1;

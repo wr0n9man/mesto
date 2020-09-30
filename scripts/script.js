@@ -7,12 +7,20 @@ let buttonoOpenPopup = document.querySelector('.profile__Edit-button')
 let buttonoClosePopup = document.querySelector('.popup__close-image')
 let buttonoSavePopup = document.querySelector('.popup__Save-button')
 let popup = document.querySelector('.popup');
+let nameInput = formElement.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
+let jobInput = formElement.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
+let profile_heading = profile.querySelector('.profile__name');
+let profile_job = profile.querySelector('.profile__about');
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 
 function popupToggle() {
 	popup.classList.toggle('popup_is-opened')
-
+   
+   if (popup.classList.length === 1){
+   nameInput.value = profile_heading.textContent;
+   jobInput.value =profile_job.textContent; 
+   }
 }
 
 buttonoOpenPopup.addEventListener('click', popupToggle);
@@ -25,17 +33,15 @@ function formSubmitHandler(evt) {
 	// О том, как это делать, расскажем позже.
 
 	// Находим поля формы в DOM
-	let nameInput = formElement.querySelector('.popup__item_name'); // Воспользуйтесь инструментом .querySelector()
-	let jobInput = formElement.querySelector('.popup__item_job');// Воспользуйтесь инструментом .querySelector()
+
 
 	// Получите значение полей из свойства value
 
 	// Выберите элементы, куда должны быть вставлены значения полей
-	let profile__heading = profile.querySelector('h1');
-	let profile__job = profile.querySelector('p');
+	
 	// Вставьте новые значения с помощью textContent
-	profile__heading.textContent = `${nameInput.value}`;
-	profile__job.textContent = `${jobInput.value}`;
+	profile_heading.textContent = nameInput.value;
+	profile_job.textContent = jobInput.value;
 	popupToggle();
 }
 
