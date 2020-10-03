@@ -9,18 +9,18 @@ let buttonoSavePopup = document.querySelector('.popup__save-button')
 let popup = document.querySelector('.popup');
 let nameInput = formElement.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
-let profile_heading = profile.querySelector('.profile__name');
-let profile_job = profile.querySelector('.profile__about');
+let profileHeading = profile.querySelector('.profile__name');
+let profileJob = profile.querySelector('.profile__about');
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 
 function popupToggle() {
 	popup.classList.toggle('popup_is-opened')
-   
-   if (popup.classList.length === 1){
-   nameInput.value = profile_heading.textContent;
-   jobInput.value =profile_job.textContent; 
-   }
+
+	if (popup.classList.contains('popup_is-opened')) {
+		nameInput.value = profileHeading.textContent;
+		jobInput.value = profileJob.textContent;
+	}
 }
 
 buttonoOpenPopup.addEventListener('click', popupToggle);
@@ -38,10 +38,10 @@ function formSubmitHandler(evt) {
 	// Получите значение полей из свойства value
 
 	// Выберите элементы, куда должны быть вставлены значения полей
-	
+
 	// Вставьте новые значения с помощью textContent
-	profile_heading.textContent = nameInput.value;
-	profile_job.textContent = jobInput.value;
+	profileHeading.textContent = nameInput.value;
+	profileJob.textContent = jobInput.value;
 	popupToggle();
 }
 

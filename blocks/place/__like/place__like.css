@@ -8,3 +8,8 @@
 	border: none;
 	margin: auto 0;
 }
+
+.place__like:hover {
+	cursor: pointer;
+	opacity: 0.6;
+}

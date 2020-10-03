@@ -8,8 +8,8 @@
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
-   text-rendering: optimizeLegibility;
-   max-width: 1280px;
+	text-rendering: optimizeLegibility;
+	max-width: 882px;
 }
 
 @media screen and (max-width: 767px) {
@@ -17,7 +17,5 @@
 		display: flex;
 		flex-direction: column;
 		width: auto;
-		padding-right: 19px;
-		padding-left: 19px;
 	}
 }
