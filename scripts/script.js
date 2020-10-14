@@ -1,5 +1,31 @@
+const initialCards = [
+	{
+		name: 'Архыз',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+	},
+	{
+		name: 'Челябинская область',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+	},
+	{
+		name: 'Иваново',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+	},
+	{
+		name: 'Камчатка',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+	},
+	{
+		name: 'Холмогорский район',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+	},
+	{
+		name: 'Байкал',
+		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+	}
+];
 
-
+const gallery = document.querySelector('.places');
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__container');
 let profile = document.querySelector('.profile__redact');
@@ -11,12 +37,10 @@ let nameInput = formElement.querySelector('.popup__item_value_name'); // Вос�
 let jobInput = formElement.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
 let profileHeading = profile.querySelector('.profile__name');
 let profileJob = profile.querySelector('.profile__about');
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
+
 
 function popupToggle() {
 	popup.classList.toggle('popup_is-opened')
-
 	if (popup.classList.contains('popup_is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
@@ -28,23 +52,25 @@ buttonoClosePopup.addEventListener('click', popupToggle);
 
 
 function formSubmitHandler(evt) {
-	evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-	// Так мы можем определить свою логику отправки.
-	// О том, как это делать, расскажем позже.
-
-	// Находим поля формы в DOM
-
-
-	// Получите значение полей из свойства value
-
-	// Выберите элементы, куда должны быть вставлены значения полей
-
-	// Вставьте новые значения с помощью textContent
+	evt.preventDefault();
 	profileHeading.textContent = nameInput.value;
 	profileJob.textContent = jobInput.value;
 	popupToggle();
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler); 
+formElement.addEventListener('submit', formSubmitHandler);
+
+const Rendergallery = () => {
+	const items = initialCards.map(Element => {
+		return `<div class="place">
+					<img src="${Element.link}" alt="Карачевск" class="place__image">
+					<div class="place__main">
+						<h3 class="place__name">${Element.name}</h3>
+						<button type="button" class="place__like"></button>
+					</div>
+				</div>`;
+	}).join('');
+	gallery.insertAdjacentHTML("afterbegin", items);
+}
+
+Rendergallery();
