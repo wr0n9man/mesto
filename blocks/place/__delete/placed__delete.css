@@ -7,6 +7,7 @@
 	height: 20px;
 	border: none;
 	margin: auto 0;
+	outline: none;
 }
 
 .place__delete:hover {

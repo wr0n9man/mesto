@@ -4,4 +4,9 @@
 	background-color: black;
 	height: 282px;
 	width: 282px;
+	outline: none;
+}
+
+.place__open:hover {
+	cursor: pointer;
 }
