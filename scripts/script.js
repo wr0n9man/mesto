@@ -73,8 +73,6 @@ const AddPlace = () => {
 const ImageOpen = () => {
 	PopupPlace.classList.toggle('popup__image_open')
 	popupToggle()
-
-
 }
 
 buttonEditProfile.addEventListener('click', profileEdit);
@@ -120,9 +118,6 @@ const getItems = (data) => {
 	return place;
 
 }
-
-
-
 
 const Rendergallery = () => {
 	const items = initialCards.map(Element => getItems(Element)

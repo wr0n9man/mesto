@@ -1,0 +1,9 @@
+.popup__close-image_profile {
+}
+
+@media screen and (max-width: 767px) {
+	.popup__close-image_profile {
+		left: 90%;
+		top: -40px;
+	}
+}
