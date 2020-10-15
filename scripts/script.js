@@ -27,106 +27,127 @@ const initialCards = [
 
 const gallery = document.querySelector('.places');
 const galleryTemplate = document.querySelector('#place');
-const PopupGallery = document.querySelector('#gallery');
-const PopupProfile = document.querySelector('#profile');
+const popupGallery = document.querySelector('#gallery');
+const popupProfile = document.querySelector('#profile');
 const buttonAddPlace = document.querySelector('.profile__add-button');
-const PopupPlace = document.querySelector('.popup__image');
-const PopupPlaceName = PopupPlace.querySelector('.popup__name');
-const PopupPlaceImage = PopupPlace.querySelector('.popup__foto');
+const popupPlace = document.querySelector('.popup__image');
+const popupPlaceName = popupPlace.querySelector('.popup__name');
+const popupPlaceImage = popupPlace.querySelector('.popup__photo');
 
 
 
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__container');
-let buttonEditProfile = document.querySelector('.profile__edit-button')
-const buttonCloseProfile = PopupProfile.querySelector('.popup__close-image')
-const buttonCloseGallery = PopupGallery.querySelector('.popup__close-image');
-const buttonClosePlace = PopupPlace.querySelector('.popup__close-image');
-let popup = document.querySelector('.popup');
-let nameInput = document.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
-let jobInput = document.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
-let profileHeading = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__about');
-let galleryNameInput = document.querySelector('.popup__item_value_mesto');
-let galleryLinkInput = document.querySelector('.popup__item_value_link');
+const formElement = document.querySelector('.popup__container');
+const buttonEditProfile = document.querySelector('.profile__edit-button')
+const buttonCloseProfile = popupProfile.querySelector('.popup__close-image')
+const buttonCloseGallery = popupGallery.querySelector('.popup__close-image');
+const buttonClosePlace = popupPlace.querySelector('.popup__close-image');
+const popup = document.querySelector('.popup');
+const nameInput = document.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
+const jobInput = document.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
+const profileHeading = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__about');
+const galleryNameInput = document.querySelector('.popup__item_value_mesto');
+const galleryLinkInput = document.querySelector('.popup__item_value_link');
 const galleryAdd = document.querySelector('.popup__save-button_gallery');
 
 
-function popupToggle() {
+function togglePopup(data) {
+	data.classList.toggle('popup_is-opened')
 	popup.classList.toggle('popup_is-opened')
 }
 
-const profileEdit = () => {
-	PopupProfile.classList.toggle('popup__container_profile')
-	popupToggle();
+const editProfile = () => {
+	togglePopup(popupProfile);
 	if (popup.classList.contains('popup_is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
 }
 
-const AddPlace = () => {
-	PopupGallery.classList.toggle('popup__container_gallery')
-	popupToggle();
+const addPlace = () => {
+
+	togglePopup(popupGallery);
 }
 
-const ImageOpen = () => {
-	PopupPlace.classList.toggle('popup__image_open')
-	popupToggle()
+const openImage = () => {
+	popupPlace.classList.toggle('popup_is-opened')
+	popup.classList.toggle('popup_is-opened')
 }
 
-buttonEditProfile.addEventListener('click', profileEdit);
-buttonAddPlace.addEventListener('click', AddPlace)
-buttonCloseProfile.addEventListener('click', profileEdit);
-buttonCloseGallery.addEventListener('click', AddPlace);
-buttonClosePlace.addEventListener('click', ImageOpen);
+buttonEditProfile.addEventListener('click', editProfile);
+buttonAddPlace.addEventListener('click', addPlace)
+buttonCloseProfile.addEventListener('click', editProfile);
+buttonCloseGallery.addEventListener('click', addPlace);
+buttonClosePlace.addEventListener('click', openImage);
 
 
-function formSubmitHandler(evt) {
+function submitFormHandler(evt) {
 	evt.preventDefault();
 	profileHeading.textContent = nameInput.value;
 	profileJob.textContent = jobInput.value;
 
-	profileEdit();
+	editProfile();
 }
 
-PopupProfile.addEventListener('submit', formSubmitHandler);
+popupProfile.addEventListener('submit', submitFormHandler);
 
 const getItems = (data) => {
 	const place = galleryTemplate.content.cloneNode(true);
 	place.querySelector('.place__name').innerText = data.name;
 	place.querySelector('.place__image').src = data.link;
-	place.querySelector('.place__like').addEventListener('click', (evt) => {
+	place.querySelector('.place__image').alt = data.name;
+	place.querySelector('.place__like').addEventListener('click', handleLikeIcon);
+	place.querySelector('.place__delete').addEventListener('click', handleDeleteCard);
 
-		evt.target.classList.toggle('place__like_active');
-	})
-	place.querySelector('.place__delete').addEventListener('click', (evt) => {
-		placeitem = evt.target.closest('.place');
-		placeitem.remove();
-	})
+	place.querySelector('.place__open').addEventListener('click', handlePreviewPicture);
+	// => {
 
-	place.querySelector('.place__open').addEventListener('click', (evt) => {
+	// 	placeitem = evt.target.closest('.place');
 
-		placeitem = evt.target.closest('.place');
+	// 	popupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
+	// 	popupPlaceImage.alt = placeitem.querySelector('.place__name').textContent;
+	// 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
+	// 	openImage();
 
-		PopupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
-		PopupPlaceImage.src = placeitem.querySelector('.place__image').src;
-		ImageOpen();
-
-	})
+	// })
 
 	return place;
 
 }
 
-const Rendergallery = () => {
+const handleLikeIcon = (Element) => {
+	Element.target.classList.toggle('place__like_active');
+	//изменяет иконку лайка
+};
+
+const handleDeleteCard = (Element) => {
+	placeitem = Element.target.closest('.place');
+	placeitem.remove();
+	//удаляет карточку
+};
+
+const handlePreviewPicture = (Element) => {
+	placeitem = Element.target.closest('.place');
+
+	popupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
+	popupPlaceImage.alt = placeitem.querySelector('.place__name').textContent;
+	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
+	openImage();
+	//открывает попап с картинкой
+}
+
+
+
+
+const renderGallery = () => {
 	const items = initialCards.map(Element => getItems(Element)
 	)
 	gallery.append(...items);
 }
 
-const addgallery = () => {
-	PopupGallery.addEventListener('submit', (evt) => {
+const addGallery = () => {
+	popupGallery.addEventListener('submit', (evt) => {
 		evt.preventDefault();
 		const item = getItems({
 
@@ -134,10 +155,15 @@ const addgallery = () => {
 			link: galleryLinkInput.value
 		});
 		gallery.prepend(item);
+		if (popupGallery.classList.contains('popup_is-opened')) {
+			addPlace();
+
+		}
 		galleryNameInput.value = '';
 		galleryLinkInput.value = '';
 	})
+
 }
 
-Rendergallery();
-addgallery();
+renderGallery();
+addGallery();

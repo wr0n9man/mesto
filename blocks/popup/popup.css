@@ -5,7 +5,7 @@
 @import "__head/popup__head.css";
 @import "__save-button/popup__save-button.css";
 @import "__image/popup__image.css";
-@import "__foto/popup__foto.css";
+@import "__foto/popup__photo.css";
 @import "__name/popup__name.css";
 
 .popup {
