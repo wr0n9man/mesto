@@ -1,11 +1,17 @@
 .popup__container {
 	z-index: 2;
-	position: relative;
+	position: fixed;
+	top: auto;
 	width: 430px;
+
 	background: #ffffff;
 	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 	border-radius: 10px;
 	box-sizing: border-box;
+
+	transition: all 0.5s ease;
+	opacity: 0;
+	visibility: hidden;
 }
 
 @media screen and (max-width: 767px) {

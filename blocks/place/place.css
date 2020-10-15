@@ -2,8 +2,11 @@
 @import "__like/place__like.css";
 @import "__main/place__main.css";
 @import "__name/place__name.css";
+@import "__delete/placed__delete.css";
+@import "__open/place__open.css";
 
 .place {
+	position: relative;
 	background: #ffffff;
 	border-radius: 10px;
 }
