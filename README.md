@@ -14,6 +14,13 @@
 * Ставить лайки
 * Открывать карточки
 
+### ЯП
+
+*html
+*css
+*js
+
+
 ### Сайт
 
 https://wr0n9man.github.io/mesto/index.html

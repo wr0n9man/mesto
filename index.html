@@ -30,7 +30,7 @@
 		<section class="places">
 
 		</section>
-		<section class="popup">
+		<section class="popup popup_type_edit">
 			<div class="popup__container" id="profile">
 				<button type="button" class="popup__close-image popup__close-image_profile"> </button>
 				<form name="popup-profile" class="popup__content">
@@ -40,20 +40,22 @@
 						required>
 					<button type="submit" class="popup__save-button popup__save-button_profile">Сохранить</button>
 				</form>
-
 			</div>
+		</section>
+		<section class="popup popup_type_new-card">
 			<div class="popup__container" id="gallery">
 				<button type="button" class="popup__close-image"> </button>
 				<form name="popup-gallery" class="popup__content">
 					<h2 class="popup__head">Новое места</h2>
-					<input type="text" name="place" class="popup__item popup__item_value_mesto" placeholder="Название"
+					<input type="text" name="place" class="popup__item popup__item_value_place" placeholder="Название"
 						required>
 					<input type="url" name="link" class="popup__item popup__item_value_link" placeholder="Ссылка на картинку"
 						required>
-					<button type="submit" class="popup__save-button popup__save-button_galleчry">Создать</button>
+					<button type="submit" class="popup__save-button popup__save-button_gallery">Создать</button>
 				</form>
 			</div>
-
+		</section>
+		<section class="popup popup_type_image">
 			<div class="popup__image" id="Image">
 				<button type="button" class="popup__close-image"> </button>
 				<img src="" alt="" class="popup__photo">

@@ -27,8 +27,8 @@ const initialCards = [
 
 const gallery = document.querySelector('.places');
 const galleryTemplate = document.querySelector('#place');
-const popupGallery = document.querySelector('#gallery');
-const popupProfile = document.querySelector('#profile');
+const popupGallery = document.querySelector('.popup_type_new-card');
+const popupProfile = document.querySelector('.popup_type_edit');
 const buttonAddPlace = document.querySelector('.profile__add-button');
 const popupPlace = document.querySelector('.popup__image');
 const popupPlaceName = popupPlace.querySelector('.popup__name');
@@ -42,27 +42,26 @@ const buttonEditProfile = document.querySelector('.profile__edit-button')
 const buttonCloseProfile = popupProfile.querySelector('.popup__close-image')
 const buttonCloseGallery = popupGallery.querySelector('.popup__close-image');
 const buttonClosePlace = popupPlace.querySelector('.popup__close-image');
-const popup = document.querySelector('.popup');
+const popup = document.querySelector('.popup_type_image');
 const nameInput = document.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
 const profileHeading = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__about');
-const galleryNameInput = document.querySelector('.popup__item_value_mesto');
+const galleryNameInput = document.querySelector('.popup__item_value_place');
 const galleryLinkInput = document.querySelector('.popup__item_value_link');
 const galleryAdd = document.querySelector('.popup__save-button_gallery');
 
 
 function togglePopup(data) {
 	data.classList.toggle('popup_is-opened')
-	popup.classList.toggle('popup_is-opened')
 }
 
 const editProfile = () => {
 	togglePopup(popupProfile);
-	if (popup.classList.contains('popup_is-opened')) {
-		nameInput.value = profileHeading.textContent;
-		jobInput.value = profileJob.textContent;
-	}
+	// if (popup.classList.contains('popup_is-opened')) {
+	// 	nameInput.value = profileHeading.textContent;
+	// 	jobInput.value = profileJob.textContent;
+	// } Просто прошлый ревьюер в прошлой работе говорил это проверять 
 }
 
 const addPlace = () => {
@@ -71,8 +70,7 @@ const addPlace = () => {
 }
 
 const openImage = () => {
-	popupPlace.classList.toggle('popup_is-opened')
-	popup.classList.toggle('popup_is-opened')
+	togglePopup(popup);
 }
 
 buttonEditProfile.addEventListener('click', editProfile);
@@ -94,9 +92,10 @@ popupProfile.addEventListener('submit', submitFormHandler);
 
 const getItems = (data) => {
 	const place = galleryTemplate.content.cloneNode(true);
+	const placeImage = place.querySelector('.place__image');
 	place.querySelector('.place__name').innerText = data.name;
-	place.querySelector('.place__image').src = data.link;
-	place.querySelector('.place__image').alt = data.name;
+	placeImage.src = data.link;
+	placeImage.alt = data.name;
 	place.querySelector('.place__like').addEventListener('click', handleLikeIcon);
 	place.querySelector('.place__delete').addEventListener('click', handleDeleteCard);
 
@@ -129,9 +128,10 @@ const handleDeleteCard = (Element) => {
 
 const handlePreviewPicture = (Element) => {
 	placeitem = Element.target.closest('.place');
+	const placeItemImage = placeitem.querySelector('.place__name');
 
-	popupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
-	popupPlaceImage.alt = placeitem.querySelector('.place__name').textContent;
+	popupPlaceName.textContent = placeItemImage.textContent;
+	popupPlaceImage.alt = placeItemImage.textContent;
 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
 	openImage();
 	//открывает попап с картинкой
@@ -155,10 +155,9 @@ const addGallery = () => {
 			link: galleryLinkInput.value
 		});
 		gallery.prepend(item);
-		if (popupGallery.classList.contains('popup_is-opened')) {
-			addPlace();
+		addPlace();
 
-		}
+
 		galleryNameInput.value = '';
 		galleryLinkInput.value = '';
 	})
