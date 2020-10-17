@@ -42,7 +42,7 @@ const buttonEditProfile = document.querySelector('.profile__edit-button')
 const buttonCloseProfile = popupProfile.querySelector('.popup__close-image')
 const buttonCloseGallery = popupGallery.querySelector('.popup__close-image');
 const buttonClosePlace = popupPlace.querySelector('.popup__close-image');
-const popup = document.querySelector('.popup_type_image');
+const popupImageOpen = document.querySelector('.popup_type_image');
 const nameInput = document.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
 const profileHeading = document.querySelector('.profile__name');
@@ -64,20 +64,14 @@ const editProfile = () => {
 	// } Просто прошлый ревьюер в прошлой работе говорил это проверять 
 }
 
-const addPlace = () => {
 
-	togglePopup(popupGallery);
-}
 
-const openImage = () => {
-	togglePopup(popup);
-}
 
 buttonEditProfile.addEventListener('click', editProfile);
-buttonAddPlace.addEventListener('click', addPlace)
+buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
 buttonCloseProfile.addEventListener('click', editProfile);
-buttonCloseGallery.addEventListener('click', addPlace);
-buttonClosePlace.addEventListener('click', openImage);
+buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); });
+buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
 
 
 function submitFormHandler(evt) {
@@ -133,7 +127,7 @@ const handlePreviewPicture = (Element) => {
 	popupPlaceName.textContent = placeItemImage.textContent;
 	popupPlaceImage.alt = placeItemImage.textContent;
 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
-	openImage();
+	togglePopup(popupImageOpen);
 	//открывает попап с картинкой
 }
 
@@ -155,7 +149,7 @@ const addGallery = () => {
 			link: galleryLinkInput.value
 		});
 		gallery.prepend(item);
-		addPlace();
+		togglePopup(popupGallery);
 
 
 		galleryNameInput.value = '';
