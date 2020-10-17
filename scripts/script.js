@@ -58,105 +58,105 @@ function togglePopup(data) {
 
 const editProfile = () => {
 	togglePopup(popupProfile);
-	if (popup.classList.contains('popup_is-opened')) {
+	if (popupImageOpen.classList.contains('popup_is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 
 	}
+}
+
+
+
+buttonEditProfile.addEventListener('click', editProfile);
+buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
+buttonCloseProfile.addEventListener('click', editProfile);
+buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); });
+buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
+
+
+function submitFormHandler(evt) {
+	evt.preventDefault();
+	profileHeading.textContent = nameInput.value;
+	profileJob.textContent = jobInput.value;
+
+	editProfile();
+}
+
+popupProfile.addEventListener('submit', submitFormHandler);
+
+const getItems = (data) => {
+	const place = galleryTemplate.content.cloneNode(true);
+	const placeImage = place.querySelector('.place__image');
+	place.querySelector('.place__name').innerText = data.name;
+	placeImage.src = data.link;
+	placeImage.alt = data.name;
+	place.querySelector('.place__like').addEventListener('click', handleLikeIcon);
+	place.querySelector('.place__delete').addEventListener('click', handleDeleteCard);
+
+	place.querySelector('.place__open').addEventListener('click', handlePreviewPicture);
+	// => {
+
+	// 	placeitem = evt.target.closest('.place');
+
+	// 	popupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
+	// 	popupPlaceImage.alt = placeitem.querySelector('.place__name').textContent;
+	// 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
+	// 	openImage();
+
+	// })
+
+	return place;
+
+}
+
+const handleLikeIcon = (Element) => {
+	Element.target.classList.toggle('place__like_active');
+	//изменяет иконку лайка
+};
+
+const handleDeleteCard = (Element) => {
+	placeitem = Element.target.closest('.place');
+	placeitem.remove();
+	//удаляет карточку
+};
+
+const handlePreviewPicture = (Element) => {
+	placeitem = Element.target.closest('.place');
+	const placeItemImage = placeitem.querySelector('.place__name');
+
+	popupPlaceName.textContent = placeItemImage.textContent;
+	popupPlaceImage.alt = placeItemImage.textContent;
+	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
+	togglePopup(popupImageOpen);
+	//открывает попап с картинкой
+}
 
 
 
 
-	buttonEditProfile.addEventListener('click', editProfile);
-	buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
-	buttonCloseProfile.addEventListener('click', editProfile);
-	buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); });
-	buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
+const renderGallery = () => {
+	const items = initialCards.map(Element => getItems(Element)
+	)
+	gallery.append(...items);
+}
 
-
-	function submitFormHandler(evt) {
+const addGallery = () => {
+	popupGallery.addEventListener('submit', (evt) => {
 		evt.preventDefault();
-		profileHeading.textContent = nameInput.value;
-		profileJob.textContent = jobInput.value;
+		const item = getItems({
 
-		editProfile();
-	}
-
-	popupProfile.addEventListener('submit', submitFormHandler);
-
-	const getItems = (data) => {
-		const place = galleryTemplate.content.cloneNode(true);
-		const placeImage = place.querySelector('.place__image');
-		place.querySelector('.place__name').innerText = data.name;
-		placeImage.src = data.link;
-		placeImage.alt = data.name;
-		place.querySelector('.place__like').addEventListener('click', handleLikeIcon);
-		place.querySelector('.place__delete').addEventListener('click', handleDeleteCard);
-
-		place.querySelector('.place__open').addEventListener('click', handlePreviewPicture);
-		// => {
-
-		// 	placeitem = evt.target.closest('.place');
-
-		// 	popupPlaceName.textContent = placeitem.querySelector('.place__name').textContent;
-		// 	popupPlaceImage.alt = placeitem.querySelector('.place__name').textContent;
-		// 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
-		// 	openImage();
-
-		// })
-
-		return place;
-
-	}
-
-	const handleLikeIcon = (Element) => {
-		Element.target.classList.toggle('place__like_active');
-		//изменяет иконку лайка
-	};
-
-	const handleDeleteCard = (Element) => {
-		placeitem = Element.target.closest('.place');
-		placeitem.remove();
-		//удаляет карточку
-	};
-
-	const handlePreviewPicture = (Element) => {
-		placeitem = Element.target.closest('.place');
-		const placeItemImage = placeitem.querySelector('.place__name');
-
-		popupPlaceName.textContent = placeItemImage.textContent;
-		popupPlaceImage.alt = placeItemImage.textContent;
-		popupPlaceImage.src = placeitem.querySelector('.place__image').src;
-		togglePopup(popupImageOpen);
-		//открывает попап с картинкой
-	}
+			name: galleryNameInput.value,
+			link: galleryLinkInput.value
+		});
+		gallery.prepend(item);
+		togglePopup(popupGallery);
 
 
+		galleryNameInput.value = '';
+		galleryLinkInput.value = '';
+	})
 
+}
 
-	const renderGallery = () => {
-		const items = initialCards.map(Element => getItems(Element)
-		)
-		gallery.append(...items);
-	}
-
-	const addGallery = () => {
-		popupGallery.addEventListener('submit', (evt) => {
-			evt.preventDefault();
-			const item = getItems({
-
-				name: galleryNameInput.value,
-				link: galleryLinkInput.value
-			});
-			gallery.prepend(item);
-			togglePopup(popupGallery);
-
-
-			galleryNameInput.value = '';
-			galleryLinkInput.value = '';
-		})
-
-	}
-
-	renderGallery();
-	addGallery();
+renderGallery();
+addGallery();
