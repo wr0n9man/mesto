@@ -43,35 +43,57 @@ const buttonCloseProfile = popupProfile.querySelector('.popup__close-image')
 const buttonCloseGallery = popupGallery.querySelector('.popup__close-image');
 const buttonClosePlace = popupPlace.querySelector('.popup__close-image');
 const popupImageOpen = document.querySelector('.popup_type_image');
-const nameInput = document.querySelector('.popup__item_value_name'); // Воспользуйтесь инструментом .querySelector()
-const jobInput = document.querySelector('.popup__item_value_job');// Воспользуйтесь инструментом .querySelector()
+
+const nameInput = document.querySelector('#name-input'); // Воспользуйтесь инструментом .querySelector()
+const jobInput = document.querySelector('#job-input');// Воспользуйтесь инструментом .querySelector()
+
 const profileHeading = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__about');
-const galleryNameInput = document.querySelector('.popup__item_value_place');
-const galleryLinkInput = document.querySelector('.popup__item_value_link');
+
+const galleryNameInput = document.querySelector('#place-input');
+const galleryLinkInput = document.querySelector('#link-input');
+
 const galleryAdd = document.querySelector('.popup__save-button_gallery');
+
 
 
 function togglePopup(data) {
 	data.classList.toggle('popup_is-opened')
+
+
 }
 
 const editProfile = () => {
 	togglePopup(popupProfile);
-	if (popupImageOpen.classList.contains('popup_is-opened')) {
+	if (popupProfile.classList.contains('popup_is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
-
 	}
 }
+
+
+const closeEscPopup = () => {
+	if (popupProfile.classList.contains('popup_is-opened')) { togglePopup(popupProfile) }
+	if (popupGallery.classList.contains('popup_is-opened')) { togglePopup(popupGallery) }
+	if (popupImageOpen.classList.contains('popup_is-opened')) { togglePopup(popupImageOpen) }
+}
+
 
 
 
 buttonEditProfile.addEventListener('click', editProfile);
 buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
+
 buttonCloseProfile.addEventListener('click', editProfile);
+document.querySelector('#profile-overlay').addEventListener('click', (evt) => { togglePopup(popupProfile) })
+
 buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); });
+document.querySelector('#gallery-overlay').addEventListener('click', (evt) => { togglePopup(popupGallery) })
+
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
+document.querySelector('#image-overlay').addEventListener('click', (evt) => { togglePopup(popupImageOpen) })
+
+document.addEventListener('keydown', (evt) => { if (evt.key == 'Escape') { closeEscPopup() } })
 
 
 function submitFormHandler(evt) {
@@ -128,6 +150,7 @@ const handlePreviewPicture = (Element) => {
 	popupPlaceImage.alt = placeItemImage.textContent;
 	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
 	togglePopup(popupImageOpen);
+
 	//открывает попап с картинкой
 }
 
