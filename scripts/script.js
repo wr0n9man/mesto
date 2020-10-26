@@ -56,6 +56,10 @@ const popup = document.querySelectorAll('.popup');
 
 function togglePopup(data) {
 	data.classList.toggle('popup_is-opened')
+	if (data === popupGallery) {
+		galleryNameInput.value = '';
+		galleryLinkInput.value = '';
+	}
 	const overlay = data.querySelector('.popup__overlay');
 	overlay.classList.toggle('popup__overlay_active')
 }
@@ -68,25 +72,19 @@ const toggleEditProfile = () => {
 	}
 }
 
-const CloseAddGallery = () => {
-	togglePopup(popupGallery);
-	galleryNameInput.value = '';
-	galleryLinkInput.value = '';
-}
-
 const closeEscPopup = () => {
-	popup.forEach((element) => { if (element.classList.contains('popup_is-opened')) { togglePopup(element) } })
+	popup.forEach((element) => { if (element.classList.contains('popup_is-opened')) { togglePopup(element); closeForm(element) } })
 }
 
 buttonEditProfile.addEventListener('click', toggleEditProfile);
 buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
 popupGallery.addEventListener('submit', () => addCardToGallery())
 
-buttonCloseProfile.addEventListener('click', toggleEditProfile);
-document.querySelector('#profile-overlay').addEventListener('click', (evt) => { togglePopup(popupProfile) })
+buttonCloseProfile.addEventListener('click', () => { toggleEditProfile(); closeForm(formProfile); });
+document.querySelector('#profile-overlay').addEventListener('click', (evt) => { togglePopup(popupProfile); closeForm(formProfile) })
 
-buttonCloseGallery.addEventListener('click', () => CloseAddGallery());
-document.querySelector('#gallery-overlay').addEventListener('click', (evt) => { CloseAddGallery() })
+buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); closeForm(formGallery) });
+document.querySelector('#gallery-overlay').addEventListener('click', (evt) => { togglePopup(popupGallery); closeForm(formGallery) })
 
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
 document.querySelector('#image-overlay').addEventListener('click', (evt) => { togglePopup(popupImageOpen) })

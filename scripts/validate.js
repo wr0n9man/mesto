@@ -69,10 +69,6 @@ const closeForm = (data) => {
 	})
 }
 
-buttonCloseGallery.addEventListener('click', () => { closeForm(formGallery) });
-
-buttonCloseProfile.addEventListener('click', () => { closeForm(formProfile) });
-
 enableValidation({
 	formSelector: '.popup__form',
 	inputSelector: '.popup__input',
