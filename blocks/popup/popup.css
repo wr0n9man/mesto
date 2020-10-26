@@ -12,6 +12,7 @@
 @import "__input-error/_active/popup__input-error_active.css";
 @import "__input/_type_error/popup__input_type_error.css";
 @import "__overlay/popup__overlay.css";
+@import "__overlay/_active/popup__overlay_active.css";
 
 .popup {
 	display: flex;

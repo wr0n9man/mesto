@@ -37,11 +37,12 @@
 				<h2 class="popup__head">Редактировать профиль</h2>
 				<form name="popup-profile" class="popup__content" novalidate>
 
-					<input type="text" name="name" class="popup__input" required minlength="2" maxlength="40"
-						id="name-input">
+					<input type="text" name="name" class="popup__input" required minlength="2" maxlength="40" id="name-input"
+						placeholders="Имя">
 					<!-- popup__item popup__item_value_name -->
 					<span class="popup__input-error" id='name-input-error'></span>
-					<input type="text" name="job" class="popup__input" required minlength="2" maxlength="200" id="job-input">
+					<input type="text" name="job" class="popup__input" required minlength="2" maxlength="200" id="job-input"
+						placeholder="Вид деятельности">
 					<!-- popup__item popup__item_value_job -->
 					<span class="popup__input-error" id="job-input-error"></span>
 					<button type="submit" class="popup__save-button popup__save-button_profile">Сохранить</button>
@@ -55,7 +56,7 @@
 				<button type="button" class="popup__close-image"> </button>
 				<h2 class="popup__head">Новое место</h2>
 				<form name="popup-gallery" class="popup__content" novalidate>
-					<input type="text" name="place" class="popup__input" placeholder="Название" required minlength="2"
+					<input type="text" name="place" class="popup__input" placeholder="Название" required minlength="1"
 						maxlength="40" id="place-input">
 					<!-- popup__item popup__item_value_place -->
 					<span class="popup__input-error" id="place-input-error"></span>
@@ -63,8 +64,8 @@
 						id="link-input">
 					<span class="popup__input-error" id="link-input-error"></span>
 					<!-- popup__item popup__item_value_link -->
-					<button type="submit" class="popup__save-button popup__save-button_gallery popup__save-button_inactive"
-						disabled>Создать</button>
+					<button type="submit"
+						class="popup__save-button popup__save-button_gallery popup__save-button_inactive">Создать</button>
 				</form>
 			</div>
 		</section>
