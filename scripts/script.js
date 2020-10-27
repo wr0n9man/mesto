@@ -62,6 +62,10 @@ function togglePopup(data) {
 	}
 	const overlay = data.querySelector('.popup__overlay');
 	overlay.classList.toggle('popup__overlay_active')
+	data.querySelector('.popup__overlay').addEventListener('click', (evt) => { togglePopup(data); })
+	if (data !== popupImageOpen) {
+		closeForm(data.querySelector('.popup__content'));
+	}
 }
 
 const toggleEditProfile = () => {
@@ -73,21 +77,18 @@ const toggleEditProfile = () => {
 }
 
 const closeEscPopup = () => {
-	popup.forEach((element) => { if (element.classList.contains('popup_is-opened')) { togglePopup(element); closeForm(element) } })
+	popup.forEach((element) => { if (element.classList.contains('popup_is-opened')) { togglePopup(element) } })
 }
 
 buttonEditProfile.addEventListener('click', toggleEditProfile);
 buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
-popupGallery.addEventListener('submit', () => addCardToGallery())
+popupGallery.addEventListener('submit', () => addCardToGallery(popupGallery))
 
-buttonCloseProfile.addEventListener('click', () => { toggleEditProfile(); closeForm(formProfile); });
-document.querySelector('#profile-overlay').addEventListener('click', (evt) => { togglePopup(popupProfile); closeForm(formProfile) })
+buttonCloseProfile.addEventListener('click', () => { toggleEditProfile() });
 
-buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery); closeForm(formGallery) });
-document.querySelector('#gallery-overlay').addEventListener('click', (evt) => { togglePopup(popupGallery); closeForm(formGallery) })
+buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery) });
 
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
-document.querySelector('#image-overlay').addEventListener('click', (evt) => { togglePopup(popupImageOpen) })
 
 document.addEventListener('keydown', (evt) => { if (evt.key === 'Escape') { closeEscPopup() } })
 
@@ -138,7 +139,7 @@ const renderGallery = () => {
 	gallery.append(...items);
 }
 
-const addCardToGallery = () => {
+const addCardToGallery = (formElement) => {
 	const item = createCard({
 		name: galleryNameInput.value,
 		link: galleryLinkInput.value
@@ -147,6 +148,9 @@ const addCardToGallery = () => {
 	togglePopup(popupGallery);
 	galleryNameInput.value = '';
 	galleryLinkInput.value = '';
+	const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+	const buttonElement = formElement.querySelector('.popup__save-button');
+	toggleButtonState(inputList, buttonElement);
 }
 
 renderGallery();
