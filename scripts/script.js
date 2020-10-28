@@ -60,12 +60,19 @@ function togglePopup(data) {
 		galleryNameInput.value = '';
 		galleryLinkInput.value = '';
 	}
-	const overlay = data.querySelector('.popup__overlay');
-	overlay.classList.toggle('popup__overlay_active')
-	data.querySelector('.popup__overlay').addEventListener('click', (evt) => { togglePopup(data); })
+	if (!data.classList.contains('popup_is-opened')) {
+		const overlay = data.querySelector('.popup__overlay')
+		overlay.remove();
+	} else {
+		const overlay = document.createElement('input');
+		overlay.classList.toggle('popup__overlay')
+		data.prepend(overlay);
+		overlay.addEventListener('click', () => { togglePopup(data); })
+	}
 	if (data !== popupImageOpen) {
 		closeForm(data.querySelector('.popup__content'));
 	}
+
 }
 
 const toggleEditProfile = () => {
@@ -154,4 +161,4 @@ const addCardToGallery = (formElement) => {
 }
 
 renderGallery();
-// 6 пункт не особо понял но надеюсь сделал правильно ,а 1 пункт должен был делатся автоматическии VSc
+// ну если сейчас 6 пункт не правильный то я не знаю что делать и в тильте

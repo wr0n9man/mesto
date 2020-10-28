@@ -31,7 +31,7 @@
 
 		</section>
 		<section class="popup popup_type_edit">
-			<input class="popup__overlay" type="text" id="profile-overlay">
+
 			<div class="popup__container" id="profile">
 				<button type="button" class="popup__close-image popup__close-image_profile"> </button>
 				<h2 class="popup__head">Редактировать профиль</h2>
@@ -39,11 +39,11 @@
 
 					<input type="text" name="name" class="popup__input" required minlength="2" maxlength="40" id="name-input"
 						placeholder="Имя">
-					<!-- popup__item popup__item_value_name -->
+
 					<span class="popup__input-error" id='name-input-error'></span>
 					<input type="text" name="job" class="popup__input" required minlength="2" maxlength="200" id="job-input"
 						placeholder="Вид деятельности">
-					<!-- popup__item popup__item_value_job -->
+
 					<span class="popup__input-error" id="job-input-error"></span>
 					<button type="submit" class="popup__save-button popup__save-button_profile">Сохранить</button>
 				</form>
@@ -51,26 +51,26 @@
 			</div>
 		</section>
 		<section class="popup popup_type_new-card">
-			<input class="popup__overlay" id="gallery-overlay">
+
 			<div class="popup__container" id="gallery">
 				<button type="button" class="popup__close-image"> </button>
 				<h2 class="popup__head">Новое место</h2>
 				<form name="popup-gallery" class="popup__content" novalidate>
 					<input type="text" name="place" class="popup__input" placeholder="Название" required minlength="1"
 						maxlength="40" id="place-input">
-					<!-- popup__item popup__item_value_place -->
+
 					<span class="popup__input-error" id="place-input-error"></span>
 					<input type="url" name="link" class="popup__input" placeholder="Ссылка на картинку" required
 						id="link-input">
 					<span class="popup__input-error" id="link-input-error"></span>
-					<!-- popup__item popup__item_value_link -->
+
 					<button type="submit"
 						class="popup__save-button popup__save-button_gallery popup__save-button_inactive">Создать</button>
 				</form>
 			</div>
 		</section>
 		<section class="popup popup_type_image" id="image" novalidate>
-			<input class="popup__overlay" id="image-overlay">
+
 			<div class="popup__image" id="Image">
 				<button type="button" class="popup__close-image"> </button>
 				<img src="" alt="" class="popup__photo">
