@@ -52,39 +52,41 @@ const galleryNameInput = document.querySelector('#place-input');
 const galleryLinkInput = document.querySelector('#link-input');
 const formGallery = document.querySelector('#gallery');
 
-const popup = document.querySelectorAll('.popup');
+const closePopup = (e) => {
+	if (e.key === 'Escape') { togglePopup(document.querySelector('.popup__is-opened')) }
+}
 
-function togglePopup(data) {
-	data.classList.toggle('popup_is-opened')
-	if (data === popupGallery) {
+const handler = () => {
+	togglePopup(document.querySelector('.popup__is-opened'))
+}
+
+function togglePopup(popup) {
+	const overlay = popup.querySelector('.popup__overlay')
+	if (popup.classList.contains('popup__is-opened')) {
+		popup.classList.remove('popup__is-opened');
+		overlay.removeEventListener('click', handler)
+		document.removeEventListener('keydown', closePopup)
+	} else {
+		popup.classList.add('popup__is-opened');
+		overlay.classList.add('popup__overlay_active')
+		overlay.addEventListener('click', handler)
+		document.addEventListener('keydown', closePopup)
+	}
+	if (popup === popupGallery) {
 		galleryNameInput.value = '';
 		galleryLinkInput.value = '';
 	}
-	if (!data.classList.contains('popup_is-opened')) {
-		const overlay = data.querySelector('.popup__overlay')
-		overlay.remove();
-	} else {
-		const overlay = document.createElement('input');
-		overlay.classList.toggle('popup__overlay')
-		data.prepend(overlay);
-		overlay.addEventListener('click', () => { togglePopup(data); })
+	if (popup !== popupImageOpen) {
+		closeForm(popup.querySelector('.popup__content'));
 	}
-	if (data !== popupImageOpen) {
-		closeForm(data.querySelector('.popup__content'));
-	}
-
 }
 
 const toggleEditProfile = () => {
 	togglePopup(popupProfile);
-	if (popupProfile.classList.contains('popup_is-opened')) {
+	if (popupProfile.classList.contains('popup__is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
-}
-
-const closeEscPopup = () => {
-	popup.forEach((element) => { if (element.classList.contains('popup_is-opened')) { togglePopup(element) } })
 }
 
 buttonEditProfile.addEventListener('click', toggleEditProfile);
@@ -97,7 +99,7 @@ buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery) }
 
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
 
-document.addEventListener('keydown', (evt) => { if (evt.key === 'Escape') { closeEscPopup() } })
+
 
 function submitEditProfileForm(evt) {
 	evt.preventDefault();
@@ -153,8 +155,6 @@ const addCardToGallery = (formElement) => {
 	});
 	gallery.prepend(item);
 	togglePopup(popupGallery);
-	galleryNameInput.value = '';
-	galleryLinkInput.value = '';
 	const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
 	const buttonElement = formElement.querySelector('.popup__save-button');
 	toggleButtonState(inputList, buttonElement);

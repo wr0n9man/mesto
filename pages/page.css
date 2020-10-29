@@ -8,6 +8,6 @@
 @import "../blocks/places/places.css";
 @import "../blocks/place/place.css";
 @import "../blocks/popup/popup.css";
-@import "../blocks/popup/_is-opened/popup_is-opened.css";
+@import "../blocks/popup/__is-opened/popup__is-opened.css";
 @import "../blocks/popup/__close-image/_profile/popup__close-image_profile.css";
 @import "../blocks/place/__like/_active/place__like_active.css";
