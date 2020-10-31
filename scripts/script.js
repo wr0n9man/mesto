@@ -25,6 +25,15 @@ const initialCards = [
 	}
 ];
 
+const mestoValid = {
+	formSelector: '.popup__content',
+	inputSelector: '.popup__input',
+	submitButtonSelector: '.popup__save-button',
+	inactiveButtonClass: 'popup__save-button_inactive',
+	inputErrorClass: 'popup__input_type_error',
+	errorClass: 'popup__input-error_active'
+}
+
 const gallery = document.querySelector('.places');
 const galleryTemplate = document.querySelector('#place');
 const popupGallery = document.querySelector('.popup_type_new-card');
@@ -52,34 +61,39 @@ const galleryNameInput = document.querySelector('#place-input');
 const galleryLinkInput = document.querySelector('#link-input');
 const formGallery = document.querySelector('#gallery');
 
-const closePopup = (e) => {
-	if (e.key === 'Escape') { togglePopup(document.querySelector('.popup__is-opened')) }
-}
-
-const handler = () => {
-	togglePopup(document.querySelector('.popup__is-opened'))
-}
 
 function togglePopup(popup) {
+
+	// написал эту функции если вызывать togglePopup(popup) при добавлени в слушатель она не вызавалась
+	const handler = () => {
+		popup.classList.remove('popup__is-opened');
+		document.removeEventListener('keydown', closePopup);
+		overlay.removeEventListener('click', handler);
+	}
+	function closePopup(e) {
+		if (e.key === 'Escape') {
+			handler();
+		}
+	}
 	const overlay = popup.querySelector('.popup__overlay')
 	if (popup.classList.contains('popup__is-opened')) {
-		popup.classList.remove('popup__is-opened');
-		overlay.removeEventListener('click', handler)
-		document.removeEventListener('keydown', closePopup)
+		handler();
 	} else {
 		popup.classList.add('popup__is-opened');
-		overlay.classList.add('popup__overlay_active')
-		overlay.addEventListener('click', handler)
-		document.addEventListener('keydown', closePopup)
+		overlay.classList.add('popup__overlay_active');
+		overlay.addEventListener('click', handler);
+		document.addEventListener('keydown', closePopup);
 	}
-	if (popup === popupGallery) {
-		galleryNameInput.value = '';
-		galleryLinkInput.value = '';
-	}
-	if (popup !== popupImageOpen) {
-		closeForm(popup.querySelector('.popup__content'));
-	}
+
 }
+
+const toggleAddCardPopup = () => {
+	togglePopup(popupGallery);
+	galleryNameInput.value = '';
+	galleryLinkInput.value = '';
+	closeForm(popupGallery.querySelector('.popup__content'), mestoValid);
+}
+
 
 const toggleEditProfile = () => {
 	togglePopup(popupProfile);
@@ -87,19 +101,19 @@ const toggleEditProfile = () => {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
+
+	closeForm(popupProfile.querySelector('.popup__content'), mestoValid);
 }
 
 buttonEditProfile.addEventListener('click', toggleEditProfile);
-buttonAddPlace.addEventListener('click', () => { togglePopup(popupGallery); })
-popupGallery.addEventListener('submit', () => addCardToGallery(popupGallery))
+buttonAddPlace.addEventListener('click', toggleAddCardPopup);
+popupGallery.addEventListener('submit', () => addCardToGallery())
 
 buttonCloseProfile.addEventListener('click', () => { toggleEditProfile() });
 
 buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery) });
 
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
-
-
 
 function submitEditProfileForm(evt) {
 	evt.preventDefault();
@@ -128,17 +142,17 @@ const handleLikeIcon = (element) => {
 };
 
 const handleDeleteCard = (data) => {
-	const placeitem = data.target.closest('.place');
-	placeitem.remove();
+	const placeItem = data.target.closest('.place');
+	placeItem.remove();
 	//удаляет карточку
 };
 
 const handlePreviewPicture = (data) => {
-	const placeitem = data.target.closest('.place');
-	const placeItemImage = placeitem.querySelector('.place__name');
+	const placeItem = data.target.closest('.place');
+	const placeItemImage = placeItem.querySelector('.place__name');
 	popupPlaceName.textContent = placeItemImage.textContent;
 	popupPlaceImage.alt = placeItemImage.textContent;
-	popupPlaceImage.src = placeitem.querySelector('.place__image').src;
+	popupPlaceImage.src = placeItem.querySelector('.place__image').src;
 	togglePopup(popupImageOpen);
 }
 
@@ -148,17 +162,14 @@ const renderGallery = () => {
 	gallery.append(...items);
 }
 
-const addCardToGallery = (formElement) => {
+const addCardToGallery = () => {
 	const item = createCard({
 		name: galleryNameInput.value,
 		link: galleryLinkInput.value
 	});
 	gallery.prepend(item);
-	togglePopup(popupGallery);
-	const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-	const buttonElement = formElement.querySelector('.popup__save-button');
-	toggleButtonState(inputList, buttonElement);
+	toggleAddCardPopup();
+	chekButton(popupGallery, mestoValid)
 }
 
 renderGallery();
-// ну если сейчас 6 пункт не правильный то я не знаю что делать и в тильте
