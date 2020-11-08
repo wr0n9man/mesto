@@ -1,3 +1,8 @@
+import { validationConfig } from './constants.js';
+import { Card } from './card.js';
+import { FormValidator } from './FormValidator.js';
+// принимает вторым параметром элемент той формы, которая валидируется не особо понял этот пункт
+
 const initialCards = [
 	{
 		name: 'Архыз',
@@ -25,25 +30,14 @@ const initialCards = [
 	}
 ];
 
-const mestoValid = {
-	formSelector: '.popup__content',
-	inputSelector: '.popup__input',
-	submitButtonSelector: '.popup__save-button',
-	inactiveButtonClass: 'popup__save-button_inactive',
-	inputErrorClass: 'popup__input_type_error',
-	errorClass: 'popup__input-error_active'
-}
 
-const gallery = document.querySelector('.places');
-const galleryTemplate = document.querySelector('#place');
+
+
 const popupGallery = document.querySelector('.popup_type_new-card');
 const popupProfile = document.querySelector('.popup_type_edit');
 const buttonAddPlace = document.querySelector('.profile__add-button');
 const popupPlace = document.querySelector('.popup__image');
-const popupPlaceName = popupPlace.querySelector('.popup__name');
-const popupPlaceImage = popupPlace.querySelector('.popup__photo');
 
-const formElement = document.querySelector('.popup__container');
 const buttonEditProfile = document.querySelector('.profile__edit-button')
 const buttonCloseProfile = popupProfile.querySelector('.popup__close-image')
 const buttonCloseGallery = popupGallery.querySelector('.popup__close-image');
@@ -52,57 +46,62 @@ const popupImageOpen = document.querySelector('.popup_type_image');
 
 const nameInput = document.querySelector('#name-input'); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector('#job-input');// Воспользуйтесь инструментом .querySelector()
-const formProfile = document.querySelector('#profile')
 
 const profileHeading = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__about');
 
 const galleryNameInput = document.querySelector('#place-input');
 const galleryLinkInput = document.querySelector('#link-input');
-const formGallery = document.querySelector('#gallery');
 
 
-function togglePopup(popup) {
+const createCard = (item) => {
+	const card = new Card(item.name, item.link, '.place');
+	const cardElement = card.generateCard();
+	document.querySelector('.places').prepend(cardElement);
+}
 
-	// написал эту функции если вызывать togglePopup(popup) при добавлени в слушатель она не вызавалась
-	const handler = () => {
+initialCards.forEach(evt => createCard(evt));
+
+export function togglePopup(popup) {
+	const closePopupHandler = () => {
 		popup.classList.remove('popup__is-opened');
-		document.removeEventListener('keydown', closePopup);
-		overlay.removeEventListener('click', handler);
+		document.removeEventListener('keydown', closePopupByEsc);
+		overlay.removeEventListener('click', closePopupHandler);
 	}
-	function closePopup(e) {
+	function closePopupByEsc(e) {
 		if (e.key === 'Escape') {
-			handler();
+			closePopupHandler();
 		}
 	}
 	const overlay = popup.querySelector('.popup__overlay')
 	if (popup.classList.contains('popup__is-opened')) {
-		handler();
+		closePopupHandler();
 	} else {
 		popup.classList.add('popup__is-opened');
 		overlay.classList.add('popup__overlay_active');
-		overlay.addEventListener('click', handler);
-		document.addEventListener('keydown', closePopup);
+		overlay.addEventListener('click', closePopupHandler);
+		document.addEventListener('keydown', closePopupByEsc);
 	}
-
 }
-
 const toggleAddCardPopup = () => {
 	togglePopup(popupGallery);
+	const validFormGallery = new FormValidator(validationConfig, popupGallery.querySelector('.popup__content'));
+	validFormGallery.enableValidation();
 	galleryNameInput.value = '';
 	galleryLinkInput.value = '';
-	closeForm(popupGallery.querySelector('.popup__content'), mestoValid);
+	validFormGallery.chekButton()
+	validFormGallery.closeForm();
 }
-
-
 const toggleEditProfile = () => {
 	togglePopup(popupProfile);
 	if (popupProfile.classList.contains('popup__is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
-
-	closeForm(popupProfile.querySelector('.popup__content'), mestoValid);
+	const validFormProfile = new FormValidator(validationConfig, popupProfile.querySelector('.popup__content'));
+	validFormProfile.enableValidation();
+	validFormProfile.chekButton()
+	validFormProfile.closeForm();
 }
 
 buttonEditProfile.addEventListener('click', toggleEditProfile);
@@ -111,7 +110,7 @@ popupGallery.addEventListener('submit', () => addCardToGallery())
 
 buttonCloseProfile.addEventListener('click', () => { toggleEditProfile() });
 
-buttonCloseGallery.addEventListener('click', () => { togglePopup(popupGallery) });
+buttonCloseGallery.addEventListener('click', toggleAddCardPopup);
 
 buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
 
@@ -124,52 +123,12 @@ function submitEditProfileForm(evt) {
 
 popupProfile.addEventListener('submit', submitEditProfileForm);
 
-const createCard = (data) => {
-	const place = galleryTemplate.content.cloneNode(true);
-	const placeImage = place.querySelector('.place__image');
-	place.querySelector('.place__name').innerText = data.name;
-	placeImage.src = data.link;
-	placeImage.alt = data.name;
-	place.querySelector('.place__like').addEventListener('click', handleLikeIcon);
-	place.querySelector('.place__delete').addEventListener('click', handleDeleteCard);
-	place.querySelector('.place__open').addEventListener('click', handlePreviewPicture);
-	return place;
-}
-
-const handleLikeIcon = (element) => {
-	element.target.classList.toggle('place__like_active');
-	//изменяет иконку лайка
-};
-
-const handleDeleteCard = (data) => {
-	const placeItem = data.target.closest('.place');
-	placeItem.remove();
-	//удаляет карточку
-};
-
-const handlePreviewPicture = (data) => {
-	const placeItem = data.target.closest('.place');
-	const placeItemImage = placeItem.querySelector('.place__name');
-	popupPlaceName.textContent = placeItemImage.textContent;
-	popupPlaceImage.alt = placeItemImage.textContent;
-	popupPlaceImage.src = placeItem.querySelector('.place__image').src;
-	togglePopup(popupImageOpen);
-}
-
-const renderGallery = () => {
-	const items = initialCards.map(element => createCard(element)
-	)
-	gallery.append(...items);
-}
-
 const addCardToGallery = () => {
-	const item = createCard({
+	createCard({
 		name: galleryNameInput.value,
 		link: galleryLinkInput.value
 	});
-	gallery.prepend(item);
 	toggleAddCardPopup();
-	chekButton(popupGallery, mestoValid)
+
 }
 
-renderGallery();
