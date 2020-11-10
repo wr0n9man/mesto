@@ -1,6 +1,8 @@
 import { validationConfig } from './constants.js';
 import { Card } from './card.js';
 import { FormValidator } from './FormValidator.js';
+import { Popup } from './popup.js'
+
 // принимает вторым параметром элемент той формы, которая валидируется не особо понял этот пункт
 
 const initialCards = [
@@ -30,9 +32,6 @@ const initialCards = [
 	}
 ];
 
-
-
-
 const popupGallery = document.querySelector('.popup_type_new-card');
 const popupProfile = document.querySelector('.popup_type_edit');
 const buttonAddPlace = document.querySelector('.profile__add-button');
@@ -52,53 +51,69 @@ const profileJob = document.querySelector('.profile__about');
 
 const galleryNameInput = document.querySelector('#place-input');
 const galleryLinkInput = document.querySelector('#link-input');
+const place = document.querySelector('.places')
+
+const validFormGallery = new FormValidator(validationConfig, popupGallery.querySelector('.popup__content'));
+const validFormProfile = new FormValidator(validationConfig, popupProfile.querySelector('.popup__content'));
+export const popupImage = document.querySelector('.popup__image');
 
 
 const createCard = (item) => {
 	const card = new Card(item.name, item.link, '.place');
 	const cardElement = card.generateCard();
-	document.querySelector('.places').prepend(cardElement);
+	place.append(cardElement);
 }
 
 initialCards.forEach(evt => createCard(evt));
 
-export function togglePopup(popup) {
-	const closePopupHandler = () => {
-		popup.classList.remove('popup__is-opened');
-		document.removeEventListener('keydown', closePopupByEsc);
-		overlay.removeEventListener('click', closePopupHandler);
-	}
-	function closePopupByEsc(e) {
-		if (e.key === 'Escape') {
-			closePopupHandler();
-		}
-	}
-	const overlay = popup.querySelector('.popup__overlay')
-	if (popup.classList.contains('popup__is-opened')) {
-		closePopupHandler();
-	} else {
-		popup.classList.add('popup__is-opened');
-		overlay.classList.add('popup__overlay_active');
-		overlay.addEventListener('click', closePopupHandler);
-		document.addEventListener('keydown', closePopupByEsc);
-	}
-}
+// export function togglePopup(popup) {
+// 	const closePopupHandler = () => {
+// 		popup.classList.remove('popup__is-opened');
+// 		document.removeEventListener('keydown', closePopupByEsc);
+// 		overlay.removeEventListener('click', closePopupHandler);
+// 	}
+// 	function closePopupByEsc(e) {
+// 		if (e.key === 'Escape') {
+// 			closePopupHandler();
+// 		}
+// 	}
+// 	const overlay = popup.querySelector('.popup__overlay')
+// 	if (popup.classList.contains('popup__is-opened')) {
+// 		closePopupHandler();
+// 	} else {
+// 		popup.classList.add('popup__is-opened');
+// 		overlay.classList.add('popup__overlay_active');
+// 		overlay.addEventListener('click', closePopupHandler);
+// 		document.addEventListener('keydown', closePopupByEsc);
+// 	}
+// }
+
+
+
+
+
+
+const popupRedactProfile = new Popup(popupProfile);
+const popupCreatePlace = new Popup(popupGallery);
+export const popupOpenPlace = new Popup(popupImageOpen);
+
 const toggleAddCardPopup = () => {
-	togglePopup(popupGallery);
-	const validFormGallery = new FormValidator(validationConfig, popupGallery.querySelector('.popup__content'));
+	popupCreatePlace.openPopup();
 	validFormGallery.enableValidation();
 	galleryNameInput.value = '';
 	galleryLinkInput.value = '';
 	validFormGallery.chekButton()
 	validFormGallery.closeForm();
 }
+
+
 const toggleEditProfile = () => {
-	togglePopup(popupProfile);
+	popupRedactProfile.openPopup();
 	if (popupProfile.classList.contains('popup__is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
-	const validFormProfile = new FormValidator(validationConfig, popupProfile.querySelector('.popup__content'));
+
 	validFormProfile.enableValidation();
 	validFormProfile.chekButton()
 	validFormProfile.closeForm();
@@ -108,11 +123,11 @@ buttonEditProfile.addEventListener('click', toggleEditProfile);
 buttonAddPlace.addEventListener('click', toggleAddCardPopup);
 popupGallery.addEventListener('submit', () => addCardToGallery())
 
-buttonCloseProfile.addEventListener('click', () => { toggleEditProfile() });
+buttonCloseProfile.addEventListener('click', () => { popupRedactProfile.closePopup() });
 
-buttonCloseGallery.addEventListener('click', toggleAddCardPopup);
+buttonCloseGallery.addEventListener('click', () => { popupCreatePlace.closePopup() });
 
-buttonClosePlace.addEventListener('click', () => { togglePopup(popupImageOpen); });
+buttonClosePlace.addEventListener('click', () => { popupOpenPlace.closePopup() });
 
 function submitEditProfileForm(evt) {
 	evt.preventDefault();
@@ -131,4 +146,3 @@ const addCardToGallery = () => {
 	toggleAddCardPopup();
 
 }
-

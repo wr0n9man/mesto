@@ -1,4 +1,5 @@
-import { togglePopup } from './script.js'
+import { popupOpenPlace, popupImage } from './script.js'
+const popupPreview = document.querySelector('.popup__image').querySelector('.popup__name')
 export class Card {
 	constructor(name, link, itemSelector) {
 		this._name = name;
@@ -33,10 +34,10 @@ export class Card {
 	};
 
 	_handlePreviewPicture = () => {
-		document.querySelector('.popup__image').querySelector('.popup__name').textContent = this._name;
-		document.querySelector('.popup__image').querySelector('.popup__photo').alt = this._name;
-		document.querySelector('.popup__image').querySelector('.popup__photo').src = this._link;
-		togglePopup(document.querySelector('.popup_type_image'));
+		popupPreview.textContent = this._name;
+		popupImage.querySelector('.popup__photo').alt = this._name;
+		popupImage.querySelector('.popup__photo').src = this._link;
+		popupOpenPlace.openPopup();
 	}
 
 	_setEventListeners() {
