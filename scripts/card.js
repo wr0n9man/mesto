@@ -1,6 +1,8 @@
 import { popupOpenPlace, popupImage } from './script.js'
 const popupPreview = document.querySelector('.popup__image').querySelector('.popup__name')
+const photo = popupImage.querySelector('.popup__photo')
 export class Card {
+
 	constructor(name, link, itemSelector) {
 		this._name = name;
 		this._link = link;
@@ -15,10 +17,12 @@ export class Card {
 
 	generateCard() {
 		this._element = this._getTemplate();
+		this._name = this._element.querySelector('.place__name')
+		this._image = this._element.querySelector('.place__image');
 		this._setEventListeners();
-		this._element.querySelector('.place__name').innerText = this._name;
-		this._element.querySelector('.place__image').src = this._link;
-		this._element.querySelector('.place__image').alt = this._name;
+		this._name.innerText = this._name;
+		this._image.src = this._link;
+		this._image.alt = this._name;
 		return this._element;
 	}
 	_handleLikeIcon = () => {
@@ -35,8 +39,8 @@ export class Card {
 
 	_handlePreviewPicture = () => {
 		popupPreview.textContent = this._name;
-		popupImage.querySelector('.popup__photo').alt = this._name;
-		popupImage.querySelector('.popup__photo').src = this._link;
+		photo.alt = this._name;
+		photo.src = this._link;
 		popupOpenPlace.openPopup();
 	}
 

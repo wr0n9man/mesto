@@ -61,7 +61,7 @@ export const popupImage = document.querySelector('.popup__image');
 const createCard = (item) => {
 	const card = new Card(item.name, item.link, '.place');
 	const cardElement = card.generateCard();
-	place.append(cardElement);
+	place.prepend(cardElement);
 }
 
 initialCards.forEach(evt => createCard(evt));
@@ -88,8 +88,8 @@ initialCards.forEach(evt => createCard(evt));
 // 	}
 // }
 
-
-
+validFormProfile.enableValidation();
+validFormGallery.enableValidation();
 
 
 
@@ -99,7 +99,7 @@ export const popupOpenPlace = new Popup(popupImageOpen);
 
 const toggleAddCardPopup = () => {
 	popupCreatePlace.openPopup();
-	validFormGallery.enableValidation();
+
 	galleryNameInput.value = '';
 	galleryLinkInput.value = '';
 	validFormGallery.chekButton()
@@ -114,7 +114,7 @@ const toggleEditProfile = () => {
 		jobInput.value = profileJob.textContent;
 	}
 
-	validFormProfile.enableValidation();
+
 	validFormProfile.chekButton()
 	validFormProfile.closeForm();
 }
@@ -133,7 +133,7 @@ function submitEditProfileForm(evt) {
 	evt.preventDefault();
 	profileHeading.textContent = nameInput.value;
 	profileJob.textContent = jobInput.value;
-	toggleEditProfile();
+	popupRedactProfile.closePopup();
 }
 
 popupProfile.addEventListener('submit', submitEditProfileForm);
@@ -143,6 +143,6 @@ const addCardToGallery = () => {
 		name: galleryNameInput.value,
 		link: galleryLinkInput.value
 	});
-	toggleAddCardPopup();
+	popupCreatePlace.closePopup()
 
 }
