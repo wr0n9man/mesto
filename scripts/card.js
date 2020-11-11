@@ -17,10 +17,10 @@ export class Card {
 
 	generateCard() {
 		this._element = this._getTemplate();
-		this._name = this._element.querySelector('.place__name')
+		this._nameCard = this._element.querySelector('.place__name')
 		this._image = this._element.querySelector('.place__image');
 		this._setEventListeners();
-		this._name.innerText = this._name;
+		this._nameCard.innerText = this._name;
 		this._image.src = this._link;
 		this._image.alt = this._name;
 		return this._element;

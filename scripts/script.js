@@ -98,9 +98,8 @@ const popupRedactProfile = new Popup(popupProfile);
 const popupCreatePlace = new Popup(popupGallery);
 export const popupOpenPlace = new Popup(popupImageOpen);
 
-const toggleAddCardPopup = () => {
+const openAddCardPopup = () => {
 	popupCreatePlace.openPopup();
-
 	galleryNameInput.value = '';
 	galleryLinkInput.value = '';
 	validFormGallery.chekButton()
@@ -108,20 +107,19 @@ const toggleAddCardPopup = () => {
 }
 
 
-const toggleEditProfile = () => {
+const openEditProfile = () => {
 	popupRedactProfile.openPopup();
 	if (popupProfile.classList.contains('popup__is-opened')) {
 		nameInput.value = profileHeading.textContent;
 		jobInput.value = profileJob.textContent;
 	}
-
-
 	validFormProfile.chekButton()
+	// она ведь вызывается и так 1 раз при открытии , а закрытие делается просто вызовом функции из класса popup  popupOpenPlace.closePopup()
 	validFormProfile.closeForm();
 }
 
-buttonEditProfile.addEventListener('click', toggleEditProfile);
-buttonAddPlace.addEventListener('click', toggleAddCardPopup);
+buttonEditProfile.addEventListener('click', openEditProfile);
+buttonAddPlace.addEventListener('click', openAddCardPopup);
 popupGallery.addEventListener('submit', () => addCardToGallery())
 
 buttonCloseProfile.addEventListener('click', () => { popupRedactProfile.closePopup() });

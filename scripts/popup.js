@@ -1,5 +1,6 @@
 export class Popup {
 	_overlay = null;
+	// в es 6 так ведь можно делать
 	constructor(popup) {
 		this._popup = popup;
 		this.closePopup = this.closePopup.bind(this);
@@ -18,7 +19,6 @@ export class Popup {
 	}
 
 	closePopup() {
-
 		this._popup.classList.remove('popup__is-opened');
 		document.removeEventListener('keydown', this.closePopupByEsc);
 		this._overlay.removeEventListener('click', this.closePopup);
