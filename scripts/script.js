@@ -53,10 +53,11 @@ const galleryNameInput = document.querySelector('#place-input');
 const galleryLinkInput = document.querySelector('#link-input');
 const place = document.querySelector('.places')
 
+
 const validFormGallery = new FormValidator(validationConfig, popupGallery.querySelector('.popup__content'));
 const validFormProfile = new FormValidator(validationConfig, popupProfile.querySelector('.popup__content'));
 export const popupImage = document.querySelector('.popup__image');
-
+export const photo = popupImage.querySelector('.popup__photo')
 
 const createCard = (item) => {
 	const card = new Card(item.name, item.link, '.place');

@@ -1,6 +1,6 @@
-import { popupOpenPlace, popupImage } from './script.js'
+import { photo, popupOpenPlace } from './script.js'
 const popupPreview = document.querySelector('.popup__image').querySelector('.popup__name')
-const photo = popupImage.querySelector('.popup__photo')
+
 export class Card {
 
 	constructor(name, link, itemSelector) {
