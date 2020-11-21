@@ -1,11 +1,10 @@
-import { photo, popupOpenPlace } from './script.js'
-const popupPreview = document.querySelector('.popup__image').querySelector('.popup__name')
+import { popupOpenPlace } from '../pages/index.js'
 
 export class Card {
-
-	constructor(name, link, itemSelector) {
-		this._name = name;
-		this._link = link;
+	constructor({ data, handleCardClick }, itemSelector) {
+		this._name = data.name;
+		this._link = data.link;
+		this._handleCardClick = handleCardClick;
 		this._itemSelector = itemSelector;
 	}
 
@@ -16,7 +15,9 @@ export class Card {
 	}
 
 	generateCard() {
+
 		this._element = this._getTemplate();
+
 		this._nameCard = this._element.querySelector('.place__name')
 		this._image = this._element.querySelector('.place__image');
 		this._setEventListeners();
@@ -37,17 +38,10 @@ export class Card {
 		//удаляет карточку
 	};
 
-	_handlePreviewPicture = () => {
-		popupPreview.textContent = this._name;
-		photo.alt = this._name;
-		photo.src = this._link;
-		popupOpenPlace.openPopup();
-	}
-
 	_setEventListeners() {
-		this._element.querySelector('.place__image').addEventListener('click', () => {
-			this._handlePreviewPicture();
-		});
+		// this._element.querySelector('.place__image').addEventListener('click', () => {
+		// 	popupOpenPlace.openPopup(this._name, this._link);
+		// });
 		this._element.querySelector('.place__delete').addEventListener('click', () => {
 			this._handleDeleteCard();
 		});
