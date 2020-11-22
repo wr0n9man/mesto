@@ -1,9 +1,8 @@
-import { popupOpenPlace } from '../pages/index.js'
-
 export class Card {
 	constructor({ data, handleCardClick }, itemSelector) {
+		this._data = data;
 		this._name = data.name;
-		this._link = data.link;
+		this._link = data.dop;
 		this._handleCardClick = handleCardClick;
 		this._itemSelector = itemSelector;
 	}
@@ -15,9 +14,7 @@ export class Card {
 	}
 
 	generateCard() {
-
 		this._element = this._getTemplate();
-
 		this._nameCard = this._element.querySelector('.place__name')
 		this._image = this._element.querySelector('.place__image');
 		this._setEventListeners();
@@ -26,22 +23,21 @@ export class Card {
 		this._image.alt = this._name;
 		return this._element;
 	}
-	_handleLikeIcon = () => {
 
+	_handleLikeIcon() {
 		this._element.querySelector('.place__like').classList.toggle('place__like_active');
-		//изменяет иконку лайка
 	};
 
-	_handleDeleteCard = () => {
+	_handleDeleteCard() {
 		this._element.remove();
 		this._element = null;
 		//удаляет карточку
 	};
 
 	_setEventListeners() {
-		// this._element.querySelector('.place__image').addEventListener('click', () => {
-		// 	popupOpenPlace.openPopup(this._name, this._link);
-		// });
+		this._element.querySelector('.place__image').addEventListener('click', () => {
+			this._handleCardClick(this._data);
+		});
 		this._element.querySelector('.place__delete').addEventListener('click', () => {
 			this._handleDeleteCard();
 		});
