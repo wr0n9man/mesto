@@ -13,7 +13,8 @@ export class Card {
 		return place;
 	}
 
-	generateCard() {
+	generateCard() {		
+	
 		this._element = this._getTemplate();
 		this._nameCard = this._element.querySelector('.place__name')
 		this._image = this._element.querySelector('.place__image');

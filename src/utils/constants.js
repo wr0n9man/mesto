@@ -25,6 +25,7 @@ export const initialCards = [
 	}
 ];
 
+export const selector =".place";
 export const popupGallery = document.querySelector('.popup_type_new-card');
 export const popupProfile = document.querySelector('.popup_type_edit');
 export const buttonAddPlace = document.querySelector('.profile__add-button');
@@ -37,9 +38,10 @@ export const jobInput = document.querySelector('#job-input');// Воспольз
 
 export const profileHeading = document.querySelector('.profile__name');
 export const profileJob = document.querySelector('.profile__about');
+export const galleryContent = popupGallery.querySelector('.popup__content')
+export const profileContent = popupProfile.querySelector('.popup__content')
 
-
-export const place = document.querySelector('.places')
+export const place = document.querySelector('.places');
 
 export const validationConfig = {
 	formSelector: '.popup__content',

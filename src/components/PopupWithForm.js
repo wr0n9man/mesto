@@ -1,51 +1,33 @@
-import popup from "./popup.js";
-import { nameInput, jobInput, popupProfile } from "../utils/constants.js"
+import Popup from "./popup.js";
 
 
-export default class popupWithForm extends popup {
-	constructor({ popup, submit }, validationForm) {
-		super(popup);
-		this.submit = submit;
-		this._validationForm = validationForm;
-		this.submitForm = this.submitForm.bind(this)
-	}
-	openPopup(data) {
-		if (this._popup === popupProfile) {
-			nameInput.value = data[0];
-			jobInput.value = data[1];
-		}
-		this._validationForm.chekButton();
-		this._validationForm.closeForm();
-		this.setEventListeners();
-		super.openPopup();
+
+export default class popupWithForm extends Popup {
+	constructor({ Popup, submit }) {
+		super(Popup);
+		this._submit = submit;	
+		this._submitForm = this._submitForm.bind(this)
 	}
 
-	closePopup() {
-		Array.from(this._popup.querySelectorAll('.popup__input')).map((item) => item.value = '');
+	close() {
+		this._popup.querySelector('.popup__content').reset();
 		this._popup.removeEventListener('submit', this.submitForm);
-		super.closePopup();
+		super.close();
 	}
 
 	_getInputValues() {
-		const inputValue = {
-			name: Array.from(this._popup.querySelectorAll('.popup__input'))[0].value,
-			dop: Array.from(this._popup.querySelectorAll('.popup__input'))[1].value
-		}
-			;
-
-		// this.submit(inputValue);
-		// this.closePopup();
+		const inputValue = Array.from(this._popup.querySelectorAll('.popup__input')).map((item) => item.value); 
+		console.log(inputValue);
 		return inputValue;
 	}
 
-	submitForm() {
-		this.submit(this._getInputValues());
-		this.closePopup();
-
+	_submitForm() {
+		this._submit(this._getInputValues());
+		this.close();
 	}
 
-	setEventListeners() {
-		this._popup.addEventListener('submit', this.submitForm);
-
+	setEventListener() {
+		this._popup.addEventListener('submit', this._submitForm);
+		super.setEventListener();
 	}
 }

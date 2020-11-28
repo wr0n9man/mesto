@@ -4,8 +4,8 @@ export default class Popup {
 	// в es 6 так ведь можно делать
 	constructor(popup) {
 		this._popup = popup;
-		this.closePopup = this.closePopup.bind(this);
-		this._closePopupByEsc = this._closePopupByEsc.bind(this);
+		this.close = this.close.bind(this);
+		this._closeByEsc = this._closeByEsc.bind(this);
 		this._overlay = null;
 	}
 
@@ -14,30 +14,28 @@ export default class Popup {
 		return this._overlay;
 	}
 
-	_closePopupByEsc(e) {
+	_closeByEsc(e) {
 		if (e.key === 'Escape') {
-			this.closePopup();
+			this.close();
 		}
 	}
 
-	closePopup() {
+	close() {
 		this._popup.classList.remove('popup__is-opened');
-		document.removeEventListener('keydown', this._closePopupByEsc);
-		this._overlay.removeEventListener('click', this.closePopup);
+		document.removeEventListener('keydown', this._closeByEsc);
+		this._overlay.removeEventListener('click', this.close);
 
 	}
 
-	openPopup() {
-
+	open() {
 		this._getOverlay();
-		this.setEventListener();
 		this._popup.classList.add('popup__is-opened');
 		this._overlay.classList.add('popup__overlay_active');
-		this._overlay.addEventListener('click', this.closePopup);
-		document.addEventListener('keydown', this._closePopupByEsc);
+		this._overlay.addEventListener('click', this.close);
+		document.addEventListener('keydown', this._closeByEsc);
 	}
 
 	setEventListener() {
-		this._popup.querySelector('.popup__close-image').addEventListener('click', this.closePopup)
+		this._popup.querySelector('.popup__close-image').addEventListener('click', this.close)
 	}
 }
