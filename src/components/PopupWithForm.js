@@ -1,4 +1,4 @@
-import Popup from "./popup.js";
+import Popup from "./Popup.js";
 
 
 
@@ -16,8 +16,7 @@ export default class PopupWithForm extends Popup {
 	}
 
 	_getInputValues() {
-		const inputValue = Array.from(this._popup.querySelectorAll('.popup__input')).map((item) => item.value); 
-		console.log(inputValue);
+		const inputValue = Array.from(this._popup.querySelectorAll('.popup__input')).map((item) => item.value); 	
 		return inputValue;
 	}
 

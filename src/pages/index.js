@@ -15,13 +15,13 @@ import {
 	profileContent,
 	nameInput,
 	jobInput
-} from '../utils/constants.js';
+} from '../utils/Constants.js';
 import './page.css';
-import { Card } from '../components/card.js';
+import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import Section from '../components/section.js';
+import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
 
@@ -40,17 +40,22 @@ const popupEditUserProfile = new PopupWithForm({
 	}
 })
 
+function createCard(item){
+	const card = new Card(
+		{
+			data: item,
+			handleCardClick: (item) => {
+				popupOpenPlace.openPopup(item.name, item.dop);
+			}
+		},
+		selector);
+		return card;
+}
+
 const galleryRender = new Section({
 	items: initialCards,
 	renderer: (item) => {
-		const card = new Card(
-			{
-				data: item,
-				handleCardClick: (item) => {
-					popupOpenPlace.openPopup(item.name, item.dop);
-				}
-			},
-			selector);
+		const card = createCard(item)
 		const cardElement = card.generateCard();
 		place.prepend(cardElement);
 	}
@@ -63,15 +68,8 @@ galleryRender.renderItems();
 const popupCreatePlace = new PopupWithForm({
 	popup: popupGallery,
 	submit: (item) => {
-		const card = new Card(
-			{
-				data: item=	{name: item[0],
-				dop: item[1]},
-				handleCardClick: (item) => {
-					popupOpenPlace.openPopup(item.name, item.dop);
-				}
-			},
-			selector);
+		const card = createCard(item={name: item[0],
+		dop: item[1]})
 		const cardElement = card.generateCard();
 		galleryRender.addItem(cardElement);
 	}
