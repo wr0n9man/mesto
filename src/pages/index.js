@@ -16,7 +16,7 @@ import {
 	nameInput,
 	jobInput
 } from '../utils/constants.js';
-import './page.css';
+// import './page.css';
 import { Card } from '../components/card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -30,7 +30,7 @@ const validFormProfile = new FormValidator(validationConfig, profileContent);
 export const popupOpenPlace = new PopupWithImage(popupImageOpen);
 const profileInfo = new UserInfo(profileHeading, profileJob);
 const popupEditUserProfile = new PopupWithForm({
-	Popup: popupProfile,
+	popup: popupProfile,
 	submit: (data) => {
 		data={
 			name: data[0],
@@ -61,7 +61,7 @@ galleryRender.renderItems();
 
 
 const popupCreatePlace = new PopupWithForm({
-	Popup: popupGallery,
+	popup: popupGallery,
 	submit: (item) => {
 		const card = new Card(
 			{
@@ -81,7 +81,7 @@ validFormProfile.enableValidation();
 validFormGallery.enableValidation();
 
 popupOpenPlace.setEventListener();
-
+popupEditUserProfile.setEventListener();
 popupCreatePlace.setEventListener();
 
 buttonEditProfile.addEventListener('click', () =>{ 
@@ -90,7 +90,7 @@ buttonEditProfile.addEventListener('click', () =>{
 	validFormProfile.closeForm(); 	
 	nameInput.value= profileInfo.getUserInfo().name;
 	jobInput.value= profileInfo.getUserInfo().about;
-	popupEditUserProfile.setEventListener();
+
 });
 buttonAddPlace.addEventListener('click', () =>{ popupCreatePlace.open();
 	validFormGallery.chekButton(); 
