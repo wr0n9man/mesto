@@ -16,7 +16,7 @@ import {
 	nameInput,
 	jobInput
 } from '../utils/constants.js';
-// import './page.css';
+import './page.css';
 import { Card } from '../components/card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
