@@ -18,7 +18,6 @@ export default class Api {
 			
 	}
 
-
 	getInitialCards() {
 		return fetch(`${this.baseUrl}/cards  `,{
 			headers: this._headers
@@ -32,5 +31,44 @@ export default class Api {
 			return Promise.reject(`Ошибка: ${res.status}`);
 		 });
  
-		}
+      }
+      
+   sendUserInfo(data){
+     return fetch(`${this.baseUrl}/users/me `,{
+         method: 'PATCH',
+         headers: this._headers,
+         body:JSON.stringify({
+            name: data.name,
+            about: data.about
+         })
+      }
+    )
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+   }
+
+   sendPlace(data){
+      return fetch(`${this.baseUrl}/cards  `,{
+         method: 'POST',
+         headers: this._headers,
+         body:JSON.stringify({
+            name: data.name,
+            link: data.link
+         })
+      }
+      ).then(res => {
+         if (res.ok) {
+           return res.json();
+         }
+   
+         // если ошибка, отклоняем промис
+         return Promise.reject(`Ошибка: ${res.status}`);
+       });
+   }
  }

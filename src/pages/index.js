@@ -7,7 +7,8 @@ import {
 	popupProfile,
 	buttonAddPlace,
 	buttonEditProfile,
-	popupImageOpen,
+   popupImageOpen,
+   profileAvatar,
 	profileHeading,
 	profileJob,
 	place,
@@ -37,7 +38,7 @@ const api = new Api({
 const validFormGallery = new FormValidator(validationConfig, galleryContent);
 const validFormProfile = new FormValidator(validationConfig, profileContent);
 const popupOpenPlace = new PopupWithImage(popupImageOpen);
-const profileInfo = new UserInfo(profileHeading, profileJob);
+const profileInfo = new UserInfo(profileHeading, profileJob, profileAvatar);
 
 const popupEditUserProfile = new PopupWithForm({
 	popup: popupProfile,
@@ -45,8 +46,14 @@ const popupEditUserProfile = new PopupWithForm({
 		data={
 			name: data[0],
 			about: data[1]
-		}
-		profileInfo.setUserInfo(data);
+      }
+      api.sendUserInfo(data) .then((result) => {
+         profileInfo.setUserInfo(result);
+       })
+       .catch((err) => {
+         console.log(err); // выведем ошибку в консоль
+       }); 
+		
 	}
 })
 
@@ -55,7 +62,7 @@ function createCard(item){
 		{
 			data: item,
 			handleCardClick: (item) => {
-				popupOpenPlace.openPopup(item.name, item.dop);
+				popupOpenPlace.openPopup(item.name, item.link);
 			}
 		},
 		selector);
@@ -77,10 +84,16 @@ const galleryRender = new Section({
 const popupCreatePlace = new PopupWithForm({
 	popup: popupGallery,
 	submit: (item) => {
-		const card = createCard(item={name: item[0],
-		link: item[1]})
-		const cardElement = card.generateCard();
-		galleryRender.addItem(cardElement);
+      api.sendPlace(item={name: item[0],
+      link: item[1]})
+      .then((result)=>{
+         const card = createCard(result)
+            const cardElement = card.generateCard();
+            galleryRender.addItem(cardElement);
+      })
+      .catch((err) => {
+         console.log(err); // выведем ошибку в консоль
+       }); 		
 	}
 })
 

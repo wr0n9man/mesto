@@ -36,6 +36,7 @@ export const popupImageOpen = document.querySelector('.popup_type_image');
 export const nameInput = document.querySelector('#name-input'); // Воспользуйтесь инструментом .querySelector()
 export const jobInput = document.querySelector('#job-input');// Воспользуйтесь инструментом .querySelector()
 
+export const profileAvatar = document.querySelector('.profile__avatar')
 export const profileHeading = document.querySelector('.profile__name');
 export const profileJob = document.querySelector('.profile__about');
 export const galleryContent = popupGallery.querySelector('.popup__content')
