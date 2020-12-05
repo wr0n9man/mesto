@@ -10,4 +10,6 @@
 @import "../blocks/popup/popup.css";
 @import "../blocks/popup/__is-opened/popup__is-opened.css";
 @import "../blocks/popup/__close-image/_profile/popup__close-image_profile.css";
-@import "../blocks/place/__like/_active/place__like_active.css";
+@import "../blocks/place/__counter/_button/_active/place__counter_button_active.css";
+@import "../blocks/content/content.css";
+@import "../blocks/spinner/spinner.css"

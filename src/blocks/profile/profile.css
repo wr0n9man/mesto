@@ -4,6 +4,7 @@
 @import "__edit-button/profile__edit-button.css";
 @import "__info/profile__info.css";
 @import "__name/profile__name.css";
+@import "__avatar-button/profile__avatat-button.css";
 @import "__redact/profile__redact.css";
 
 .profile {

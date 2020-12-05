@@ -1,21 +1,25 @@
-@import"_hover/profile__avatar_hover.css";
-.profile__avatar {
+.profile__avatar-button{
 	position: relative;
+	padding: 0;
 	width: 120px;
 	height: 120px;
+	margin-right: 30px;
+	border: 0;
+	z-index: 0;
 	border-radius: 120px;
-	
+	background-color: black;
 }
 
-.profile__avatar:hover{
-	opacity: 0.6;
+.profile__avatar-button:hover{
+	cursor: pointer;
+	
+
 	background-repeat: no-repeat;
 	background-position: center;
-	z-index:-1;
 }
 
 @media screen and (max-width: 767px) {
-	.profile__avatar {
+	.profile__avatar-button {
 		margin: 0;
 	}
 }

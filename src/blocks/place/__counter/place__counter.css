@@ -1,0 +1,11 @@
+@import "_button/place__counter_button.css";
+@import "_like/place__counter_like.css";
+
+.place__counter{
+	display: flex;
+	flex-direction: column;
+	justify-content: center	;
+	align-items: center;
+	height: 38px;
+	
+}

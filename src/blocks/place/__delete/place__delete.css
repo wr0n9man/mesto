@@ -8,6 +8,7 @@
 	border: none;
 	margin: auto 0;
 	outline: none;
+	display: none;
 }
 
 .place__delete:hover {

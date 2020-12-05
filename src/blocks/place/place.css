@@ -1,9 +1,10 @@
 @import "__image/place__image.css";
-@import "__like/place__like.css";
+@import	"__counter/place__counter.css";
 @import "__main/place__main.css";
 @import "__name/place__name.css";
-@import "__delete/placed__delete.css";
+@import "__delete/place__delete.css";
 @import "__open/place__open.css";
+@import"__delete/place__delete_active.css";
 
 .place {
 	position: relative;
