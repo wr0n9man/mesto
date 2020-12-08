@@ -15,7 +15,7 @@
 	margin-bottom: 37px;
 }
 
-.popup__delete-button :hover {
+.popup__delete-button:hover {
 	background: rgba(0, 0, 0, 0.8);
 	cursor: pointer;
 }

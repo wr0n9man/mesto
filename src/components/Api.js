@@ -1,7 +1,7 @@
 export default class Api {
 	constructor({baseUrl, headers}) {
-	  this.baseUrl = baseUrl;
-    this._headers = headers;
+	this.baseUrl = baseUrl;
+  this._headers = headers;
 
 	}
  
@@ -120,7 +120,7 @@ sendAvatar(data){
     method: 'PATCH',
     headers: this._headers,
     body:JSON.stringify({
-      avatar: data
+      avatar: data.avatar
     })
  }
 )

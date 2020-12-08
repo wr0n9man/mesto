@@ -33,15 +33,15 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupDelete from '../components/PopupDelete.js';
 
-function renderLoading(isLoading){
+function renderLoading(popup,isLoading){
 	if (isLoading){
-	  spinner.classList.add('spinner_visible')
-	  content.classList.add('content_hidden')
+		popup.querySelector('.popup__save-button').textContent='Сохранение...'	
 	}else{
-		spinner.classList.remove('spinner_visible')
-	  content.classList.remove('content_hidden')
+		popup.querySelector('.popup__save-button').textContent='Сохранение'
 	}
  }
+
+ 
 
 const api = new Api({
 	baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-18',
@@ -57,38 +57,36 @@ const validFormProfile = new FormValidator(validationConfig, profileContent);
 const validFormAvatar = new FormValidator(validationConfig, avatarContent);
 const popupOpenPlace = new PopupWithImage(popupImageOpen);
 const profileInfo = new UserInfo(profileHeading, profileJob, profileAvatar);
-
+const popupDeletePlace = new PopupDelete(popupDeleteImage,api)	
 
 const popupEditAvatar = new PopupWithForm({
 	popup:popupAvatar,
-	submit: (data)=>{	
-		avatarContent.querySelector('.popup__save-button').textContent='Сохранение...'	
-		api.sendAvatar(data[0])
+	submit: (data)=>{		
+		api.sendAvatar(data)
 		.then((result)=>{
+			renderLoading(avatarContent,true)
 			profileInfo.setUserInfo(result);
+			popupEditAvatar.close(); 
 		})
 		.catch((err) => {
          console.log(err); // выведем ошибку в консоль
        }); 
-		 avatarContent.querySelector('.popup__save-button').textContent='Сохранение'
+		 renderLoading(avatarContent,false)
 	}
 })
 
 const popupEditUserProfile = new PopupWithForm({
 	popup: popupProfile,
 	submit: (data) => {
-		profileContent.querySelector('.popup__save-button').textContent='Сохранение...'
-		data={
-			name: data[0],
-			about: data[1]
-      }
-      api.sendUserInfo(data) .then((result) => {
-         profileInfo.setUserInfo(result);
+		renderLoading(profileContent,true)		
+		api.sendUserInfo(data) .then((result) => {
+			profileInfo.setUserInfo(result);
+			popupEditUserProfile.close(); 
        })
        .catch((err) => {
          console.log(err); // выведем ошибку в консоль
        }); 
-		 profileContent.querySelector('.popup__save-button').textContent='Сохранение'
+		 renderLoading(profileContent,false)	
 	}
 })
 
@@ -100,9 +98,8 @@ function createCard(item){
 				popupOpenPlace.openPopup(item.name, item.link);
 			}
 		},
-		selector,
-		popupDeleteImage,
-		PopupDelete,
+		selector,		
+		popupDeletePlace,
 		api);
 		return card;
 }
@@ -111,7 +108,7 @@ const galleryRender = new Section({
 	renderer: (item) => {
 		const card = createCard(item)
 		const cardElement = card.generateCard();
-		place.append(cardElement);
+		galleryRender.addItem(cardElement, true);	
 	}
 },
 	place
@@ -122,46 +119,45 @@ const galleryRender = new Section({
 const popupCreatePlace = new PopupWithForm({
 	popup: popupGallery,
 	submit: (item) => {
-		galleryContent.querySelector('.popup__save-button').textContent='Созданение...'
-      api.sendPlace(item={name: item[0],
-      link: item[1]})
+		renderLoading(galleryContent,true)	
+      api.sendPlace(item)
       .then((result)=>{
          const card = createCard(result)
             const cardElement = card.generateCard();
-            galleryRender.addItem(cardElement);
+				galleryRender.addItem(cardElement,false);
+				popupCreatePlace.close(); 
       })
       .catch((err) => {
          console.log(err); // выведем ошибку в консоль
-		 }); 
-		 galleryContent.querySelector('.popup__save-button').textContent='Создать'		
+		 });
+		 renderLoading(galleryContent,false)	
+				
 	}
 })
 
-renderLoading(true);
 
-api.getInfoUser()
-.then((result) => {
-	profileInfo.setUserInfo(result)
+
+
+
+  Promise.all([     //в Promise.all передаем массив промисов которые нужно выполнить
+	api.getInfoUser(),
+	api.getInitialCards()
+])    
+.then((values)=>{    //попадаем сюда когда оба промиса будут выполнены
+	const [userData, initialCards] = values;
+	profileInfo.setUserInfo(userData);
+	galleryRender.renderItems(initialCards);
 	
- })
- .catch((err) => {
-	console.log(err); // выведем ошибку в консоль
- });
+})
+.catch((err)=>{     //попадаем сюда если один из промисов завершаться ошибкой
+	console.log(err);
+})
 
- api.getInitialCards()
-  .then((result) => {
-	galleryRender.renderItems(result);
-	renderLoading(false);
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  }); 
- 
 
 validFormProfile.enableValidation();
 validFormGallery.enableValidation();
 
-// PopupDeletePlace.setEventListener();
+popupDeletePlace.setEventListener();	
 popupOpenPlace.setEventListener();
 popupEditUserProfile.setEventListener();
 popupCreatePlace.setEventListener();

@@ -23,7 +23,7 @@ export default class Popup {
 	close() {
 		this._popup.classList.remove('popup__is-opened');
 		document.removeEventListener('keydown', this._closeByEsc);
-		this._overlay.removeEventListener('click', this.close);
+		// this._overlay.removeEventListener('click', this.close);
 
 	}
 
@@ -31,11 +31,13 @@ export default class Popup {
 		this._getOverlay();
 		this._popup.classList.add('popup__is-opened');
 		this._overlay.classList.add('popup__overlay_active');
-		this._overlay.addEventListener('click', this.close);
+		
 		document.addEventListener('keydown', this._closeByEsc);
 	}
 
 	setEventListener() {
+		this._getOverlay();
+		this._overlay.addEventListener('click', this.close);
 		this._popup.querySelector('.popup__close-image').addEventListener('click', this.close)
 	}
 }

@@ -48,7 +48,7 @@
 						placeholder="Имя">
 
 					<span class="popup__input-error" id='name-input-error'></span>
-					<input type="text" name="job" class="popup__input" required minlength="2" maxlength="200" id="job-input"
+					<input type="text" name="about" class="popup__input" required minlength="2" maxlength="200" id="job-input"
 						placeholder="Вид деятельности">
 
 					<span class="popup__input-error" id="job-input-error"></span>
@@ -64,7 +64,7 @@
 				<button type="button" class="popup__close-image"> </button>
 				<h2 class="popup__head">Новое место</h2>
 				<form name="popup-gallery" class="popup__content" novalidate>
-					<input type="text" name="place" class="popup__input" placeholder="Название" required minlength="1"
+					<input type="text" name="name" class="popup__input" placeholder="Название" required minlength="1"
 						maxlength="40" id="place-input">
 
 					<span class="popup__input-error" id="place-input-error"></span>
@@ -84,7 +84,7 @@
 				<button type="button" class="popup__close-image"> </button>
 				<h2 class="popup__head">Обновить аватар</h2>
 				<form name="popup-avatar" class="popup__content" novalidate>					
-					<input type="url" name="link" class="popup__input" placeholder="Ссылка на картинку" required
+					<input type="url" name="avatar" class="popup__input" placeholder="Ссылка на картинку" required
 						id="link_avatar-input">
 					<span class="popup__input-error" id="link_avatar-input-error"></span>
 
@@ -97,7 +97,7 @@
 
 		<section class="popup popup_type_delete">
 			<input class="popup__overlay">
-			<form class="popup__container" id="delete">
+			<form class="popup__container" id="delete" >
 				<button type="button" class="popup__close-image"> </button>				
 				<h2 class="popup__head">Вы уверены?</h2>
 				<button type="submit" class="popup__delete-button">Да</button>	

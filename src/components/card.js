@@ -1,12 +1,11 @@
 export class Card {
-	constructor({ data, handleCardClick }, itemSelector,popupDeleteImage, popupDelete , api) {
+	constructor({ data, handleCardClick }, itemSelector, popupDelete , api) {
 		this._data = data;
 		this._name = data.name;
 		this._link = data.link;
 		this._likes = data.likes;
 		this._id= data._id;		
-		this._ownerId = data.owner._id;
-		this.popupDeleteImage =popupDeleteImage;
+		this._ownerId = data.owner._id;		
 		this._handleCardClick = handleCardClick;
 		this._itemSelector = itemSelector;
 		this._popupDelete = popupDelete;
@@ -28,36 +27,42 @@ export class Card {
 		this._setEventListeners();
 		this._nameCard.innerText = this._name;
 		this._image.src = this._link;
-		this._image.alt = this._name;
-		this._counter.innerText = this._likes.length;
+		this._image.alt = this._name;	
 		this._api.getInfoUser()
 		.then((result)=>{if (this._ownerId===result._id){
 			this._delete.classList.add('place__delete_active')}
-			this._likes.map((item)=>{ if (item._id===result._id){
-				this._element.querySelector('.place__counter_button').classList.add('place__counter_button_active');	
-			}})
-		})		
+			this.countinglikes(result)
+		})
+		.catch((err) => {
+         console.log(err); // выведем ошибку в консоль
+       });		
 		return this._element;
+	}
+
+	countinglikes(result){
+		this._counter.innerText = this._likes.length;
+		this._likes.map((item)=>{ if (item._id===result._id){
+			this._element.querySelector('.place__counter_button').classList.add('place__counter_button_active');	
+		}})
 	}
 
 	_handleLikeIcon() {
 		const like =this._element.querySelector('.place__counter_button');
-		if(like.classList.contains('place__counter_button_active')){
-		like.classList.remove('place__counter_button_active');
+		if(like.classList.contains('place__counter_button_active')){		
 		this._api.deleteLike(this._id)
-		.then((result)=> this._counter.innerText = result.likes.length)		
+		.then((result)=> {this._counter.innerText = result.likes.length
+			like.classList.remove('place__counter_button_active');})		
 	}else
-	{like.classList.add('place__counter_button_active');
-	this._api.putLike(this._id)
-	.then((result)=> this._counter.innerText = result.likes.length);
+	{this._api.putLike(this._id)
+	.then((result)=> {this._counter.innerText = result.likes.length;
+		like.classList.add('place__counter_button_active');});
 	}
 		
 	};	
 
-	handleDeleteCard(id) {
-		const popupDeletePlace = new this._popupDelete(this.popupDeleteImage,this._api)			
-				popupDeletePlace.setEventListener(id)
-		popupDeletePlace.open();	
+	handleDeleteCard(id) {		
+		this._popupDelete.open(id,this._element);
+		
 		//удаляет карточку
 	};
 
