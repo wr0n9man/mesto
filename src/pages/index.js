@@ -34,10 +34,11 @@ import Api from '../components/Api.js';
 import PopupDelete from '../components/PopupDelete.js';
 
 function renderLoading(popup,isLoading){
+	const popupSaveButton =popup.querySelector('.popup__save-button');
 	if (isLoading){
-		popup.querySelector('.popup__save-button').textContent='Сохранение...'	
+		popupSaveButton.textContent='Сохранение...'	
 	}else{
-		popup.querySelector('.popup__save-button').textContent='Сохранение'
+		popupSaveButton.textContent='Сохранение'
 	}
  }
 
@@ -57,14 +58,25 @@ const validFormProfile = new FormValidator(validationConfig, profileContent);
 const validFormAvatar = new FormValidator(validationConfig, avatarContent);
 const popupOpenPlace = new PopupWithImage(popupImageOpen);
 const profileInfo = new UserInfo(profileHeading, profileJob, profileAvatar);
-const popupDeletePlace = new PopupDelete(popupDeleteImage,api)	
-
+const popupDeletePlace = new PopupDelete({
+	popup:popupDeleteImage,
+	api:api,
+	submit:(data)=>{
+		api.deleteCard(data)
+		.then(()=>{popupDeletePlace.close();
+			
+			})
+		.catch((err) => {
+         console.log(err); // выведем ошибку в консоль
+       }); 
+	}})	
+	
 const popupEditAvatar = new PopupWithForm({
 	popup:popupAvatar,
 	submit: (data)=>{		
+		renderLoading(avatarContent,true)
 		api.sendAvatar(data)
-		.then((result)=>{
-			renderLoading(avatarContent,true)
+		.then((result)=>{		
 			profileInfo.setUserInfo(result);
 			popupEditAvatar.close(); 
 		})
@@ -89,6 +101,7 @@ const popupEditUserProfile = new PopupWithForm({
 		 renderLoading(profileContent,false)	
 	}
 })
+
 
 function createCard(item){
 	const card = new Card(

@@ -4,7 +4,7 @@ export default class Popup {
 	// в es 6 так ведь можно делать
 	constructor(popup) {
 		this._popup = popup;
-		this.close = this.close.bind(this);
+		this.close = this.close.bind(this);		
 		this._closeByEsc = this._closeByEsc.bind(this);
 		this._overlay = null;
 	}
